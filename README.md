@@ -27,3 +27,5 @@ A alternativa seria sincronizar tudo pelo html... but gud luck with that.
 
 E no main chamamos as classes / modules de outros ficheiros para construir o
 robot. Have fun :)
+
+## PLEASE PLEASE PLEASE USE BRANCHES!!!
