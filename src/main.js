@@ -19,9 +19,6 @@ function main() {
     document.body.appendChild(renderer.domElement);
 
     scene.add(new THREE.AxesHelper(400));
-    const mesh = new THREE.Mesh(new THREE.BoxGeometry(190, 480, 220), new THREE.MeshBasicMaterial({color: 0xff0000}));
-    mesh.position.set(95, 240, 110);
-    scene.add(mesh);
     cameraControl.setTarget(new THREE.Vector3(95, 240, 110));
     camera = cameraControl.camera1;
 
