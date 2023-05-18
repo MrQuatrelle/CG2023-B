@@ -28,3 +28,10 @@ window.addEventListener("resize", () => {
     camera.update();
     renderer.setSize(window.innerWidth, window.innerHeight);
 });
+
+// TODO: REMOVE THIS, it's just for testing
+import feet from "./feet.js";
+scene.add(feet.left);
+scene.add(feet.right);
+
+
