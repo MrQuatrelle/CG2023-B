@@ -21,7 +21,14 @@ const leftFoot = new THREE.Object3D();
 leftFoot.add(leftFootMesh);
 leftFoot.add(leftFootEdges);
 
-leftFoot.position.set(40, 10, 40);
+// set up left foot to plug in to the pivot
+leftFoot.position.set(0, -10, 40);
+
+const leftFootHandle = new THREE.Object3D();
+leftFootHandle.add(leftFoot);
+
+leftFootHandle.position.set(120, 20, 0);
+
 
 const rightFootGeom = new THREE.BoxGeometry(80, 20, 80);
 const rightFootMesh = new THREE.Mesh(
@@ -41,13 +48,17 @@ const rightFootEdges = new THREE.LineSegments(
 const rightFoot = new THREE.Object3D();
 rightFoot.add(rightFootMesh);
 rightFoot.add(rightFootEdges);
-rightFoot.r
 
+// set up right foot to plug in to the pivot
+rightFoot.position.set(0, -10, 40);
 
-rightFoot.position.set(40, 10, 120);
+const rightFootHandle = new THREE.Object3D();
+rightFootHandle.add(rightFoot);
+
+rightFootHandle.position.set(40, 20, 0);
 
 export default {
-    left: leftFoot,
-    right: rightFoot,
+    left: leftFootHandle,
+    right: rightFootHandle,
 }
 
