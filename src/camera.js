@@ -1,72 +1,72 @@
 import * as THREE from "three";
 
-const camera = new THREE.PerspectiveCamera(
-    70,
+const front = new THREE.OrthographicCamera(
+    - window.innerWidth / 2,
+    window.innerWidth / 2,
+    window.innerHeight / 2 + 100,
+    - window.innerHeight / 2 - 100,
+);
+
+const lateral = new THREE.OrthographicCamera(
+    - window.innerWidth / 2,
+    window.innerWidth / 2,
+    window.innerHeight / 2 + 100,
+    - window.innerHeight / 2 - 100,
+);
+
+const top = new THREE.OrthographicCamera(
+    - window.innerWidth / 2,
+    window.innerWidth / 2,
+    window.innerHeight / 2 + 100,
+    - window.innerHeight / 2 - 100,
+);
+
+const isoOrthographic = new THREE.OrthographicCamera(
+    - window.innerWidth / 2,
+    window.innerWidth / 2,
+    window.innerHeight / 2 + 100,
+    - window.innerHeight / 2 - 100,
+);
+
+const isoPerspective = new THREE.PerspectiveCamera(
+    75,
     window.innerWidth / window.innerHeight,
     1,
     1000
 );
 
 var target;
+const cameras = [front, lateral, top, isoOrthographic, isoPerspective]
 
 function setTarget(t) {
     target = t;
-    camera.lookAt(t);
-}
-
-function setCameraPosition(x, y, z) {
-    camera.position.x = x;
-    camera.position.y = y;
-    camera.position.z = z;
+    cameras.forEach((c) => {c.lookAt(t)});
 }
 
 function update() {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.lookAt(target);
-    camera.updateProjectionMatrix();
-}
-
-export default {
-    raw: camera,
-    setTarget: setTarget,
-    update: update,
+    /* TODO: it'd be nice if we could make something like this again...
+        camera1.aspect = window.innerWidth / window.innerHeight;
+        camera1.lookAt(target);
+        camera1.updateProjectionMatrix();
+    */
 }
 
 //TODO: change this coordinates once the robot is added
-const pos1 = [500, 500, 500];
-const pos2 = [0, 500, 500];
-const pos3 = [0, 500, 0];
-const pos4 = [0, -500, 0];
-const pos5 = [500, 500, 0];
+front.position.set(1000, 240, 110);
+lateral.position.set(95, 240, 1000);
+top.position.set(95, 1000, 110);
+isoOrthographic.position.set(500, 500, 500);
+isoPerspective.position.set(500, 500, 500);
 
-setCameraPosition(pos1[0], pos1[1], pos1[2]);
+export default {
+    setTarget: setTarget,
+    camera1: front,
+    camera2: lateral,
+    camera3: top,
+    camera4: isoOrthographic,
+    camera5: isoPerspective,
+}
 
-window.addEventListener("keydown", (e) => {
-    switch (e.key) {
-        case '1':
-            console.log("[INFO]: camera1");
-            setCameraPosition(pos1[0], pos1[1], pos1[2]);
-            camera.lookAt(target);
-            break;
-        case '2':
-            console.log("[INFO]: camera2");
-            setCameraPosition(pos2[0], pos2[1], pos2[2]);
-            camera.lookAt(target);
-            break;
-        case '3':
-            console.log("[INFO]: camera3");
-            setCameraPosition(pos3[0], pos3[1], pos3[2]);
-            camera.lookAt(target);
-            break;
-        case '4':
-            console.log("[INFO]: camera4");
-            setCameraPosition(pos4[0], pos4[1], pos4[2]);
-            camera.lookAt(target);
-            break;
-        case '5':
-            console.log("[INFO]: camera5");
-            setCameraPosition(pos5[0], pos5[1], pos5[2]);
-            camera.lookAt(target);
-            break;
-    }
-});
+
+
+

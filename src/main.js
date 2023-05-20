@@ -57,3 +57,4 @@ window.addEventListener("keydown", (e) => {
         // TODO: add the rest of the keys
     }
 });
+
