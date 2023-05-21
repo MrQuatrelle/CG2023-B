@@ -26,9 +26,7 @@ function main() {
     camera = cameraControl.camera1;
     scene.add(body.body);
     scene.add(head.head);
-    scene.add(braco.leftArm);
-    scene.add(braco.rightArm);
-    
+
     animate();
 }
 
