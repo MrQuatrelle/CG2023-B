@@ -2,6 +2,7 @@ import * as THREE from "three";
 import cameraControl from "./camera.js";
 import body from "./body.js";
 import head from "./head.js";
+import braco from "./braco.js"
 
 const scene = new THREE.Scene();
 const renderer = new THREE.WebGLRenderer();
@@ -25,7 +26,8 @@ function main() {
     camera = cameraControl.camera1;
     scene.add(body.body);
     scene.add(head.head);
-
+    scene.add(braco.leftArm);
+    scene.add(braco.rightArm);
     animate();
 }
 
