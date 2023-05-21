@@ -3,13 +3,11 @@ import * as THREE from "three";
 
 // Materials (Chest - Lime Green, Belly - Dark Green, Waist - Light Grey)
 const chestSolidMat = new THREE.MeshBasicMaterial( { color: 0x10ff10});
-const bodyLinesMat = new THREE.LineBasicMaterial( {color: 0x0000ff, linewidth: 10} );
+const bodyLinesMat = new THREE.LineBasicMaterial( {color: 0x000000, linewidth: 100} );
 const bellyMat = new THREE.MeshBasicMaterial( { color: 0x00aa00} );
 const waistMat = new THREE.MeshBasicMaterial( { color: 0xaaaaaa} );
 
 //Chest piece
-const chestCenter = new THREE.Object3D();
-chestCenter.position.set(110,380,80);
 
 //Front part of chest
 const chestSolidGeo1 = new THREE.BoxGeometry(160, 80, 130);
@@ -86,7 +84,6 @@ const body = new THREE.Object3D();
 
 body.add(chest1);
 body.add(chest2);
-body.add(chestCenter);
 
 body.add(belly1);
 body.add(belly2);
