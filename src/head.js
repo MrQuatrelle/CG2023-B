@@ -1,7 +1,7 @@
 import * as THREE from "three";
 
 const headSolidMat = new THREE.MeshBasicMaterial( { color: 0x000070});
-const headLinesMat = new THREE.LineBasicMaterial( {color: 0xffffff, linewidth: 20} );
+const headLinesMat = new THREE.LineBasicMaterial( {color: 0xffffff, linewidth: 1} );
 
 
 //head piece

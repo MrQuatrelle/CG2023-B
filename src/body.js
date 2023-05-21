@@ -1,9 +1,9 @@
 import * as THREE from "three";
-import wheel from "./wheels.js"
+import wheel from "./wheels.js";
 
 // Materials (Chest - Lime Green, Belly - Dark Green, Waist - Light Grey)
 const chestSolidMat = new THREE.MeshBasicMaterial( { color: 0x10ff10});
-const bodyLinesMat = new THREE.LineBasicMaterial( {color: 0x000000, linewidth: 100} );
+const bodyLinesMat = new THREE.LineBasicMaterial( {color: 0x000000, linewidth: 1} );
 const bellyMat = new THREE.MeshBasicMaterial( { color: 0x00aa00} );
 const waistMat = new THREE.MeshBasicMaterial( { color: 0xaaaaaa} );
 
