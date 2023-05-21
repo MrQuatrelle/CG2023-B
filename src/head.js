@@ -13,7 +13,7 @@ const headEdges1 = new THREE.LineSegments( headSolidGeo1, headLinesMat);
 const head1 = new THREE.Object3D();
 head1.add(headSolid1);
 head1.add(headEdges1);
-head1.position.set(80,440,120);
+head1.position.set(110,440,120);
 
 //Antennas
 const headSolidGeo2 = new THREE.ConeGeometry(5, 20, 100);
@@ -22,7 +22,7 @@ const headEdges2 = new THREE.LineSegments( headSolidGeo2, headLinesMat);
 const head2 = new THREE.Object3D();
 head2.add(headSolid2);
 head2.add(headEdges2);
-head2.position.set(105,460,105);
+head2.position.set(95,470,105);
 
 const head3 = new THREE.Object3D();
 const headSolidGeo3= new THREE.ConeGeometry(5, 20, 100);
@@ -31,7 +31,7 @@ const headEdges3 = new THREE.LineSegments( headSolidGeo3, headLinesMat);
 
 head3.add(headSolid3);
 head3.add(headEdges3);
-head3.position.set(135,460,105);
+head3.position.set(125,470,105);
 
 const head = new THREE.Object3D();
 head.add(head1);
