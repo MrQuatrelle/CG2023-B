@@ -1,15 +1,13 @@
 import * as THREE from "three";
-
+import wheel from "./wheels.js"
 
 // Materials (Chest - Lime Green, Belly - Dark Green, Waist - Light Grey)
 const chestSolidMat = new THREE.MeshBasicMaterial( { color: 0x10ff10});
-const bodyLinesMat = new THREE.LineBasicMaterial( {color: 0x0000ff, linewidth: 10} );
+const bodyLinesMat = new THREE.LineBasicMaterial( {color: 0x000000, linewidth: 100} );
 const bellyMat = new THREE.MeshBasicMaterial( { color: 0x00aa00} );
 const waistMat = new THREE.MeshBasicMaterial( { color: 0xaaaaaa} );
 
 //Chest piece
-const chestCenter = new THREE.Object3D();
-chestCenter.position.set(110,380,80);
 
 //Front part of chest
 const chestSolidGeo1 = new THREE.BoxGeometry(160, 80, 130);
@@ -80,19 +78,22 @@ waist2.add(waistSolid2);
 waist2.add(waistEdges2);
 waist2.position.set(110,250, 70);
 
+const wheel1 = wheel.createWheel(40,245,115);
+const wheel2 = wheel.createWheel(180,245,115);
 
 // Building body with all pieces
 const body = new THREE.Object3D();
 
 body.add(chest1);
 body.add(chest2);
-body.add(chestCenter);
 
 body.add(belly1);
 body.add(belly2);
 body.add(belly3);
 body.add(waist1);
 body.add(waist2);
+body.add(wheel1);
+body.add(wheel2);
 
 function reset(){
 	body.position.set(110,380,80);

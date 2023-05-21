@@ -28,6 +28,7 @@ function main() {
     scene.add(head.head);
     scene.add(braco.leftArm);
     scene.add(braco.rightArm);
+    
     animate();
 }
 
