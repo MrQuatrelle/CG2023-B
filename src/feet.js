@@ -21,7 +21,7 @@ const leftFoot = new THREE.Object3D();
 leftFoot.add(leftFootMesh);
 leftFoot.add(leftFootEdges);
 
-// set up left foot to plug in to the pivot
+// prepare left foot to plug to its pivot
 leftFoot.position.set(0, -10, 40);
 
 const leftFootHandle = new THREE.Object3D();

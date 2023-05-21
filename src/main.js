@@ -57,3 +57,9 @@ window.addEventListener("keydown", (e) => {
         // TODO: add the rest of the keys
     }
 });
+
+
+// TODO: TESTING LEGS (delete later)
+import legs from "./legs.js";
+
+scene.add(legs.left);
