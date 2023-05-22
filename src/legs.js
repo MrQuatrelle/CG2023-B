@@ -1,8 +1,11 @@
 import * as THREE from "three";
 import feet from "./feet.js";
+import wheels from "./wheels.js";
 
 class Leg extends THREE.Object3D {
     #foot;
+    #topWheel;
+    #bottomWheel;
 
     constructor() {
         super();
@@ -16,7 +19,13 @@ class Leg extends THREE.Object3D {
         this.#foot = new feet.Foot();
         this.#foot.position.set(0, -240, 0);
 
-        this.add(leg, thy, this.#foot);
+        this.#topWheel = new wheels.Wheel();
+        this.#topWheel.position.set(0, -125, 35);
+
+        this.#bottomWheel = new wheels.Wheel()
+        this.#bottomWheel.position.set(0, -195, 35);
+
+        this.add(leg, thy, this.#foot, this.#topWheel, this.#bottomWheel);
     }
 
     #generateLeg() {
@@ -68,6 +77,16 @@ class Leg extends THREE.Object3D {
 
     getFoot() {
         return this.#foot;
+    }
+
+    isLeft() {
+        this.#topWheel.translateY(-40);
+        this.#bottomWheel.translateY(-40);
+    }
+
+    isRight() {
+        this.#topWheel.translateY(40);
+        this.#bottomWheel.translateY(40);
     }
 }
 

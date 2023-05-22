@@ -1,32 +1,31 @@
 import * as THREE from "three";
 
-function createWheel(posX, posY, posZ) {
-    const wheelGeom = new THREE.CylinderGeometry(25, 25, 20);
-    const wheelMesh = new THREE.Mesh(
-        wheelGeom,
-        new THREE.MeshBasicMaterial({
-            color: 0xff0000
-        })
-    );
-    const wheelEdges = new THREE.LineSegments(
-        new THREE.EdgesGeometry(wheelGeom),
-        new THREE.LineBasicMaterial({
-            color: 0x000000,
-            linewidth: 2,
-        })
-    );
+class Wheel extends THREE.Object3D {
+    constructor() {
+        super();
 
-    const wheelHandle = new THREE.Object3D();
-    wheelHandle.add(wheelMesh);
-    wheelHandle.add(wheelEdges);
+        const wheelGeom = new THREE.CylinderGeometry(25, 25, 20);
+        const wheelMesh = new THREE.Mesh(
+            wheelGeom,
+            new THREE.MeshBasicMaterial({
+                color: 0xff0000
+            })
+        );
+        const wheelEdges = new THREE.LineSegments(
+            new THREE.EdgesGeometry(wheelGeom),
+            new THREE.LineBasicMaterial({
+                color: 0x000000,
+                linewidth: 2,
+            })
+        );
 
-    wheelHandle.position.set(posX,posY,posZ);
-    
-    wheelHandle.rotation.z = Math.PI / 2;
+        this.add(wheelMesh);
+        this.add(wheelEdges);
 
-    return wheelHandle;
+        this.rotateZ(Math.PI / 2);
+    }
 }
 
-export default{
-    createWheel: createWheel,
+export default {
+    Wheel: Wheel,
 }

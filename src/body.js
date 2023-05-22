@@ -29,11 +29,13 @@ class Body extends THREE.Object3D {
         this.#leftFoot = this.#leftLeg.getFoot();
         this.#leftFoot.translateX(10);
         this.#leftLeg.position.set(30, -120, 0);
+        this.#leftLeg.isLeft();
 
         this.#rightLeg = new legs.Leg();
         this.#rightFoot = this.#rightLeg.getFoot();
         this.#rightFoot.translateX(-10);
         this.#rightLeg.position.set(-30, -120, 0);
+        this.#rightLeg.isRight();
 
         this.reset();
         this.add(chest, belly, waist, this.#head, this.#leftLeg, this.#rightLeg);
@@ -119,8 +121,10 @@ class Body extends THREE.Object3D {
         waist2.add(waistEdges2);
         waist2.position.set(0, 0, -10);
 
-        const wheel1 = wheel.createWheel(-70, -5, 30);
-        const wheel2 = wheel.createWheel(70, -5, 30);
+        const wheel1 = new wheel.Wheel();
+        wheel1.position.set(-70, -5, 30);
+        const wheel2 = new wheel.Wheel();
+        wheel2.position.set(70, -5, 30);
 
         const waist = new THREE.Object3D();
         waist.add(waist1, waist2, wheel1, wheel2);
