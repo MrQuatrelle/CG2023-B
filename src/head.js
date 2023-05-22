@@ -9,8 +9,8 @@ class Head extends THREE.Object3D {
         const antenna1 = this.#generateAntenna(headLinesMat);
         const antenna2 = this.#generateAntenna(headLinesMat);
 
-        antenna1.position.set(-15,20,-15);
-        antenna2.position.set(15,20,-15);
+        antenna1.position.set(-15,30,-15);
+        antenna2.position.set(15,30,-15);
 
         this.add(head, antenna1, antenna2);
     }
