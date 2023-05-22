@@ -4,7 +4,7 @@ class Head extends THREE.Object3D {
 
     constructor() {
         super();
-        const headLinesMat = new THREE.LineBasicMaterial( {color: 0xffffff, linewidth: 20} );
+        const headLinesMat = new THREE.LineBasicMaterial( {color: 0xffffff, linewidth: 1} );
         const head = this.#generateHead(headLinesMat);
         const antenna1 = this.#generateAntenna(headLinesMat);
         const antenna2 = this.#generateAntenna(headLinesMat);
