@@ -32,7 +32,7 @@ const leftTubeEdges = new THREE.LineSegments(
 leftForearmHandler = new THREE.Object3D();
 leftForearmHandler.add(leftForearm);
 leftForearmHandler.add(leftForearmEdges);
-leftForearmHandler.position.set(150,0.0,0.0);
+leftForearmHandler.position.set(80,-65,0.0);
 
 leftTubesHandler = new THREE.Object3D();
 leftTubesHandler.add(leftTubes);
@@ -70,6 +70,9 @@ leftArmHandler.rotation.y = Math.PI / 2;
 leftArmHandler.rotation.z = Math.PI / (-2);
 leftArmHandler.position.set(-50,0.0,0.0);
 
+leftForearmHandler.rotation.y = Math.PI / 2;
+leftForearmHandler.rotation.z = Math.PI / 2;
+
 //-----RIGHT ARM-----
 
 var rightArmHandler, rightForearmHandler, rightArm, rightTubes, rightForearm, rightTubesHandler;
@@ -104,7 +107,7 @@ const rightTubeEdges = new THREE.LineSegments(
 rightForearmHandler = new THREE.Object3D();
 rightForearmHandler.add(rightForearm);
 rightForearmHandler.add(rightForearmEdges);
-rightForearmHandler.position.set(150,0.0,0.0);
+rightForearmHandler.position.set(80,-65,0.0);
 
 rightTubesHandler = new THREE.Object3D();
 rightTubesHandler.add(rightTubes);
@@ -142,9 +145,10 @@ rightArmHandler.rotation.y = Math.PI / 2;
 rightArmHandler.rotation.z = Math.PI / (-2);
 rightArmHandler.position.set(80,0.0,0.0)
 
+rightForearmHandler.rotation.y = Math.PI / 2;
+rightForearmHandler.rotation.z = Math.PI / 2;
+
 export default {
     leftArm: leftArmHandler,
     rightArm: rightArmHandler,
 }
-
-
