@@ -19,7 +19,7 @@ function main() {
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(renderer.domElement);
 
-    scene.add(new THREE.AxesHelper(400));
+    scene.add(new THREE.AxesHelper(600));
     cameraControl.setTarget(new THREE.Vector3(95, 240, 110));
     camera = cameraControl.camera1;
     const body = new Body.Body();
