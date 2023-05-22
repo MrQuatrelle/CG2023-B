@@ -111,7 +111,7 @@ class Body extends THREE.Object3D {
         waist1.position.set(0, 0, 70);
 
         //Center part of waist
-        const waistGeo2 = new THREE.BoxGeometry(120, 20, 140);
+        const waistGeo2 = new THREE.BoxGeometry(100, 20, 140);
         const waistSolid2 = new THREE.Mesh(waistGeo2, waistMat);
         const waistEdges2 = new THREE.LineSegments(waistGeo2, bodyLinesMat);
         const waist2 = new THREE.Object3D();
@@ -119,8 +119,8 @@ class Body extends THREE.Object3D {
         waist2.add(waistEdges2);
         waist2.position.set(0, 0, -10);
 
-        const wheel1 = wheel.createWheel(-70, -5, 20);
-        const wheel2 = wheel.createWheel(70, -5, 20);
+        const wheel1 = wheel.createWheel(-70, -5, 30);
+        const wheel2 = wheel.createWheel(70, -5, 30);
 
         const waist = new THREE.Object3D();
         waist.add(waist1, waist2, wheel1, wheel2);

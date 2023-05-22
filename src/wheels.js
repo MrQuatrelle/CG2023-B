@@ -1,7 +1,7 @@
 import * as THREE from "three";
 
 function createWheel(posX, posY, posZ) {
-    const wheelGeom = new THREE.CylinderGeometry(25, 25, 25);
+    const wheelGeom = new THREE.CylinderGeometry(25, 25, 20);
     const wheelMesh = new THREE.Mesh(
         wheelGeom,
         new THREE.MeshBasicMaterial({
