@@ -1,5 +1,6 @@
 import * as THREE from "three";
 import wheel from "./wheels.js";
+import head from "./head.js";
 
 // Materials (Chest - Lime Green, Belly - Dark Green, Waist - Light Grey)
 const chestSolidMat = new THREE.MeshBasicMaterial({ color: 0x10ff10 });
@@ -16,7 +17,6 @@ const chestEdges1 = new THREE.LineSegments(chestSolidGeo1, bodyLinesMat);
 const chest1 = new THREE.Object3D();
 chest1.add(chestSolid1);
 chest1.add(chestEdges1);
-chest1.position.set(110, 380, 95);
 
 //Back part of chest
 const chestSolidGeo2 = new THREE.BoxGeometry(100, 80, 30);
@@ -25,7 +25,7 @@ const chestEdges2 = new THREE.LineSegments(chestSolidGeo2, bodyLinesMat);
 const chest2 = new THREE.Object3D();
 chest2.add(chestSolid2);
 chest2.add(chestEdges2);
-chest2.position.set(110, 380, 15);
+chest2.position.set(0, 0, -80);
 
 
 //Belly piece in 3 parts
@@ -37,7 +37,7 @@ const bellyEdges = new THREE.LineSegments(bellyGeo, bodyLinesMat);
 const belly1 = new THREE.Object3D();
 belly1.add(bellySolid);
 belly1.add(bellyEdges);
-belly1.position.set(110, 315, 95);
+belly1.position.set(0, -65, 0);
 
 //Back part of belly
 const bellyGeo2 = new THREE.BoxGeometry(100, 50, 30);
@@ -46,7 +46,7 @@ const bellyEdges2 = new THREE.LineSegments(bellyGeo2, bodyLinesMat);
 const belly2 = new THREE.Object3D();
 belly2.add(bellySolid2);
 belly2.add(bellyEdges2);
-belly2.position.set(110, 315, 15);
+belly2.position.set(0, -65, -80);
 
 
 //Under part of belly
@@ -56,7 +56,7 @@ const bellyEdges3 = new THREE.LineSegments(bellyGeo3, bodyLinesMat);
 const belly3 = new THREE.Object3D();
 belly3.add(bellySolid3);
 belly3.add(bellyEdges3);
-belly3.position.set(110, 275, 80);
+belly3.position.set(0, -105, -15);
 
 
 
@@ -67,7 +67,7 @@ const waistEdges1 = new THREE.LineSegments(waistGeo1, bodyLinesMat);
 const waist1 = new THREE.Object3D();
 waist1.add(waistSolid1);
 waist1.add(waistEdges1);
-waist1.position.set(110, 250, 150);
+waist1.position.set(0, -130, 55);
 
 //Center part of waist
 const waistGeo2 = new THREE.BoxGeometry(120, 20, 140);
@@ -76,17 +76,16 @@ const waistEdges2 = new THREE.LineSegments(waistGeo2, bodyLinesMat);
 const waist2 = new THREE.Object3D();
 waist2.add(waistSolid2);
 waist2.add(waistEdges2);
-waist2.position.set(110, 250, 70);
+waist2.position.set(0, -130, -25);
 
-const wheel1 = wheel.createWheel(40, 245, 115);
-const wheel2 = wheel.createWheel(180, 245, 115);
+const wheel1 = wheel.createWheel(-70, -135, 20);
+const wheel2 = wheel.createWheel(70, -135, 20);
 
 // Building body with all pieces
 const body = new THREE.Object3D();
 
 body.add(chest1);
 body.add(chest2);
-
 body.add(belly1);
 body.add(belly2);
 body.add(belly3);
@@ -95,17 +94,24 @@ body.add(waist2);
 body.add(wheel1);
 body.add(wheel2);
 
+head.head.position.set(0, 60, 25);
+
+body.add(head.head);
+
+body.position.set(110, 380, 95);
+
 function reset() {
     body.position.set(110, 380, 80);
 }
 
-function setChestPosition(x, y, z) {
-    chestSolidMesh.position.x = x;
-    chestSolidMesh.position.y = y;
-    chestSolidMesh.position.z = z;
+function setBodyPosition(x, y, z) {
+    body.position.x = x;
+    body.position.y = y;
+    body.position.z = z;
 }
 
 export default {
     body: body,
-    reset: reset
+    reset: reset,
+    setBodyPosition: setBodyPosition
 }
