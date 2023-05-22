@@ -44,15 +44,17 @@ const leftThy = new THREE.Object3D();
 leftThy.add(leftThyMesh);
 leftThy.add(leftThyEdges);
 
+const leftFoot = new feet.Foot();
+
 // prepare left leg and left foot to plug to its pivot
-leftLeg.position.set(-10, -160, 20);
 leftThy.position.set(-10, -40, 10);
-feet.left.position.set(0, -240, 0);
+leftLeg.position.set(-10, -160, 20);
+leftFoot.position.set(0, -240, 0);
 
 const leftLegHandle = new THREE.Object3D();
-leftLegHandle.add(leftLeg);
-leftLegHandle.add(feet.left);
 leftLegHandle.add(leftThy);
+leftLegHandle.add(leftLeg);
+leftLegHandle.add(leftFoot);
 
 leftLegHandle.position.set(150, 260, 0);
 
@@ -98,15 +100,17 @@ const rightThy = new THREE.Object3D();
 rightThy.add(rightThyMesh);
 rightThy.add(rightThyEdges);
 
+const rightFoot = new feet.Foot();
+
 // prepare right leg and right foot to plug to its pivot
 rightLeg.position.set(10, -160, 20);
 rightThy.position.set(10, -40, 10);
-feet.right.position.set(0, -240, 0);
+rightFoot.position.set(0, -240, 0);
 
 const rightLegHandle = new THREE.Object3D();
 rightLegHandle.add(rightLeg);
-rightLegHandle.add(feet.right);
 rightLegHandle.add(rightThy);
+rightLegHandle.add(rightFoot);
 
 rightLegHandle.position.set(70, 260, 0);
 export default {
