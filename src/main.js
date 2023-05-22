@@ -1,6 +1,6 @@
 import * as THREE from "three";
 import cameraControl from "./camera.js";
-import body from "./body.js";
+import Body from "./body.js";
 
 const scene = new THREE.Scene();
 const renderer = new THREE.WebGLRenderer();
@@ -22,7 +22,8 @@ function main() {
     scene.add(new THREE.AxesHelper(400));
     cameraControl.setTarget(new THREE.Vector3(95, 240, 110));
     camera = cameraControl.camera1;
-    scene.add(body.body);
+    const body = new Body.Body();
+    scene.add(body);
 
     animate();
 }

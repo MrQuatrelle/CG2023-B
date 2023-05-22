@@ -9,19 +9,22 @@ class Body extends THREE.Object3D {
 	constructor() {
 		super();
 		const bodyLinesMat = new THREE.LineBasicMaterial({ color: 0x000000, linewidth: 1 });
-		const chest = this.#generateChest();
-		const belly = this.#generateBelly();
-		belly.position.set(0, -80, 0);
 
-		const waist = this.#generateWaist();
+
+		const chest = this.#generateChest(bodyLinesMat);
+		const belly = this.#generateBelly(bodyLinesMat);
+		belly.position.set(0,-65,0);
+
+		const waist = this.#generateWaist(bodyLinesMat);
 		waist.position.set(0, -130, 0);
-		this.#head = new head.Head();
-		this.#head.position.set(0, 20, -20);
 
+		this.#head = new head.Head();
+		this.#head.position.set(0, 60, 40);
+		this.reset();
 		this.add(chest, belly, waist, this.#head);
 	}
 
-	#generateChest() {
+	#generateChest(bodyLinesMat) {
 		const chestMeshMat = new THREE.MeshBasicMaterial({ color: 0x10ff10 });
 		//Front part of chest
 		const chestMeshGeo1 = new THREE.BoxGeometry(160, 80, 130);
@@ -29,6 +32,7 @@ class Body extends THREE.Object3D {
 		const chestEdges1 = new THREE.LineSegments(chestMeshGeo1, bodyLinesMat);
 		const chest1 = new THREE.Object3D();
 		chest1.add(chestMesh1, chestEdges1);
+		chest1.position.set(0,0,15)
 
 		//Back part of chest
 		const chestMeshGeo2 = new THREE.BoxGeometry(100, 80, 30);
@@ -36,7 +40,7 @@ class Body extends THREE.Object3D {
 		const chestEdges2 = new THREE.LineSegments(chestMeshGeo2, bodyLinesMat);
 		const chest2 = new THREE.Object3D();
 		chest2.add(chestMesh2, chestEdges2);
-		chest2.position.set(0, 0, -80);
+		chest2.position.set(0,0,-65)
 		
 		const chest = new THREE.Object3D();
 		chest.add(chest1, chest2);
@@ -44,7 +48,7 @@ class Body extends THREE.Object3D {
 		return chest;
 	}
 
-	#generateBelly() {
+	#generateBelly(bodyLinesMat) {
 		const bellyMat = new THREE.MeshBasicMaterial({ color: 0x00aa00 });
 
 		const bellyGeo = new THREE.BoxGeometry(160, 50, 130);
@@ -54,7 +58,7 @@ class Body extends THREE.Object3D {
 
 		belly1.add(bellySolid);
 		belly1.add(bellyEdges);
-		belly1.position.set(0, -65, 0);
+		belly1.position.set(0,0,15)
 
 		const bellyGeo2 = new THREE.BoxGeometry(100, 50, 30);
 		const bellySolid2 = new THREE.Mesh(bellyGeo2, bellyMat);
@@ -63,7 +67,7 @@ class Body extends THREE.Object3D {
 
 		belly2.add(bellySolid2);
 		belly2.add(bellyEdges2);
-		belly2.position.set(0, -65, -80);
+		belly2.position.set(0,0,-65);
 
 		//Under part of belly
 		const bellyGeo3 = new THREE.BoxGeometry(100, 30, 160);
@@ -72,15 +76,15 @@ class Body extends THREE.Object3D {
 		const belly3 = new THREE.Object3D();
 		belly3.add(bellySolid3);
 		belly3.add(bellyEdges3);
-		belly3.position.set(0, -105, -15);
+		belly3.position.set(0,-40,0);
 
-		belly = new THREE.Object3D();
+		const belly = new THREE.Object3D();
 		belly.add(belly1, belly2, belly3);
 
 		return belly;
 	}
 
-	#generateWaist() {
+	#generateWaist(bodyLinesMat) {
 		const waistMat = new THREE.MeshBasicMaterial({ color: 0xaaaaaa });
 		//Front part of waist
 		const waistGeo1 = new THREE.BoxGeometry(160, 20, 20);
@@ -89,7 +93,7 @@ class Body extends THREE.Object3D {
 		const waist1 = new THREE.Object3D();
 		waist1.add(waistSolid1);
 		waist1.add(waistEdges1);
-		waist1.position.set(0, -130, 55);
+		waist1.position.set(0, 0, 70);
 
 		//Center part of waist
 		const waistGeo2 = new THREE.BoxGeometry(120, 20, 140);
@@ -98,12 +102,12 @@ class Body extends THREE.Object3D {
 		const waist2 = new THREE.Object3D();
 		waist2.add(waistSolid2);
 		waist2.add(waistEdges2);
-		waist2.position.set(0, -130, -25);
+		waist2.position.set(0, 0, -10);
 
-		const wheel1 = wheel.createWheel(-70, -135, 20);
-		const wheel2 = wheel.createWheel(70, -135, 20);
+		const wheel1 = wheel.createWheel(-70, -5, 20);
+		const wheel2 = wheel.createWheel(70, -5, 20);
 		
-		waist = new THREE.Object3D();
+		const waist = new THREE.Object3D();
 		waist.add(waist1, waist2, wheel1, wheel2);
 		return waist;
 	}
