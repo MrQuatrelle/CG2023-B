@@ -21,7 +21,8 @@ function main() {
     scene.add(new THREE.AxesHelper(400));
     cameraControl.setTarget(new THREE.Vector3(95, 240, 110));
     camera = cameraControl.camera1;
-    scene.add(Body.Body);
+    const body = new Body.Body();
+    scene.add(body);
 
     animate();
 }
