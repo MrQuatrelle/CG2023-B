@@ -37,6 +37,10 @@ head.add(head1);
 head.add(head2);
 head.add(head3);
 
+head.position.set(0, 20, -20);
+
+const headHandle = new THREE.Object3D();
+headHandle.add(head);
 
 function reset() {
     head.position.set(80, 440, 120);
@@ -48,6 +52,6 @@ function setheadPosition(x, y, z) {
     head.position.z = z;
 }
 export default {
-    head: head,
+    head: headHandle,
     reset: reset
 }

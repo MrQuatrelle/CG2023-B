@@ -94,7 +94,7 @@ body.add(waist2);
 body.add(wheel1);
 body.add(wheel2);
 
-head.head.position.set(0, 60, 25);
+head.head.position.set(0, 40, 45);
 
 body.add(head.head);
 
