@@ -1,119 +1,76 @@
 import * as THREE from "three";
 import feet from "./feet.js";
 
-// TODO: Would be like to refactor this if we have time...
+class Leg extends THREE.Object3D {
+    #foot;
 
-// left leg creation
-const leftLegGeom = new THREE.BoxGeometry(60, 160, 40);
-const leftLegMesh = new THREE.Mesh(
-    leftLegGeom,
-    new THREE.MeshBasicMaterial({
-        color: 0xff0000
-    })
-);
-const leftLegEdges = new THREE.LineSegments(
-    new THREE.EdgesGeometry(leftLegGeom),
-    new THREE.LineBasicMaterial({
-        color: 0x000000,
-        linewidth: 2,
-    })
-);
+    constructor() {
+        super();
 
-const leftLeg = new THREE.Object3D();
-leftLeg.add(leftLegMesh);
-leftLeg.add(leftLegEdges);
+        const leg = this.#generateLeg();
+        leg.position.set(0, -160, 20);
 
-// left thy creation
-const leftThyGeom = new THREE.BoxGeometry(20, 80, 20);
-const leftThyMesh = new THREE.Mesh(
-    leftThyGeom,
-    new THREE.MeshBasicMaterial({
-        color: 0xbbbbbb
-    })
-);
+        const thy = this.#generateThy();
+        thy.position.set(0, -40, 10);
 
-const leftThyEdges = new THREE.LineSegments(
-    new THREE.EdgesGeometry(leftThyGeom),
-    new THREE.LineBasicMaterial({
-        color: 0x000000,
-        linewidth: 2,
-    })
-);
+        this.#foot = new feet.Foot();
+        this.#foot.position.set(0, -240, 0);
 
-const leftThy = new THREE.Object3D();
-leftThy.add(leftThyMesh);
-leftThy.add(leftThyEdges);
+        this.add(leg, thy, this.#foot);
+    }
 
-const leftFoot = new feet.Foot();
+    #generateLeg() {
+        const legGeom = new THREE.BoxGeometry(60, 160, 40);
+        const legMesh = new THREE.Mesh(
+            legGeom,
+            new THREE.MeshBasicMaterial({
+                color: 0xff0000
+            })
+        );
+        const legEdges = new THREE.LineSegments(
+            new THREE.EdgesGeometry(legGeom),
+            new THREE.LineBasicMaterial({
+                color: 0x000000,
+                linewidth: 2,
+            })
+        );
 
-// prepare left leg and left foot to plug to its pivot
-leftThy.position.set(-10, -40, 10);
-leftLeg.position.set(-10, -160, 20);
-leftFoot.position.set(0, -240, 0);
+        const leg = new THREE.Object3D();
+        leg.add(legMesh);
+        leg.add(legEdges);
 
-const leftLegHandle = new THREE.Object3D();
-leftLegHandle.add(leftThy);
-leftLegHandle.add(leftLeg);
-leftLegHandle.add(leftFoot);
+        return leg;
+    }
 
-leftLegHandle.position.set(150, 260, 0);
+    #generateThy() {
+        const thyGeom = new THREE.BoxGeometry(20, 80, 20);
+        const thyMesh = new THREE.Mesh(
+            thyGeom,
+            new THREE.MeshBasicMaterial({
+                color: 0xbbbbbb
+            })
+        );
 
+        const thyEdges = new THREE.LineSegments(
+            new THREE.EdgesGeometry(thyGeom),
+            new THREE.LineBasicMaterial({
+                color: 0x000000,
+                linewidth: 2,
+            })
+        );
 
-// right leg creation
-const rightLegGeom = new THREE.BoxGeometry(60, 160, 40);
-const rightLegMesh = new THREE.Mesh(
-    rightLegGeom,
-    new THREE.MeshBasicMaterial({
-        color: 0xff0000
-    })
-);
-const rightLegEdges = new THREE.LineSegments(
-    new THREE.EdgesGeometry(rightLegGeom),
-    new THREE.LineBasicMaterial({
-        color: 0x000000,
-        linewidth: 2,
-    })
-);
+        const thy = new THREE.Object3D();
+        thy.add(thyMesh);
+        thy.add(thyEdges);
 
-const rightLeg = new THREE.Object3D();
-rightLeg.add(rightLegMesh);
-rightLeg.add(rightLegEdges);
+        return thy;
+    }
 
-// right thy creation
-const rightThyGeom = new THREE.BoxGeometry(20, 80, 20);
-const rightThyMesh = new THREE.Mesh(
-    rightThyGeom,
-    new THREE.MeshBasicMaterial({
-        color: 0xbbbbbb
-    })
-);
+    getFoot() {
+        return this.#foot;
+    }
+}
 
-const rightThyEdges = new THREE.LineSegments(
-    new THREE.EdgesGeometry(rightThyGeom),
-    new THREE.LineBasicMaterial({
-        color: 0x000000,
-        linewidth: 2,
-    })
-);
-
-const rightThy = new THREE.Object3D();
-rightThy.add(rightThyMesh);
-rightThy.add(rightThyEdges);
-
-const rightFoot = new feet.Foot();
-
-// prepare right leg and right foot to plug to its pivot
-rightLeg.position.set(10, -160, 20);
-rightThy.position.set(10, -40, 10);
-rightFoot.position.set(0, -240, 0);
-
-const rightLegHandle = new THREE.Object3D();
-rightLegHandle.add(rightLeg);
-rightLegHandle.add(rightThy);
-rightLegHandle.add(rightFoot);
-
-rightLegHandle.position.set(70, 260, 0);
 export default {
-    left: leftLegHandle,
-    right: rightLegHandle,
+    Leg: Leg,
 }
