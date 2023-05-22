@@ -6,16 +6,16 @@ class Head extends THREE.Object3D {
     constructor() {
         super();
         const headLinesMat = new THREE.LineBasicMaterial( {color: 0xffffff, linewidth: 20} );
-        const head = this.#generateHead();
-        const antenna1 = this.#generateAntenna();
-        const antenna2 = this.#generateAntenna();
+        const head = this.#generateHead(headLinesMat);
+        const antenna1 = this.#generateAntenna(headLinesMat);
+        const antenna2 = this.#generateAntenna(headLinesMat);
 
-        antenna1.position.set(0,20,-15);
-        antenna2.position.set(0,20,-15);
+        antenna1.position.set(-15,20,-15);
+        antenna2.position.set(15,20,-15);
 
         this.add(head, antenna1, antenna2);
     }
-    #generateAntenna(){
+    #generateAntenna(headLinesMat){
         const antennaSolidMat = new THREE.MeshBasicMaterial( { color: 0x000070});
         const antenna = new THREE.Object3D();
         const antennaSolidGeo= new THREE.ConeGeometry(5, 20, 100);
@@ -26,7 +26,7 @@ class Head extends THREE.Object3D {
         antenna.add(antennaEdges);
         return antenna;
     }
-    #generateHead(){
+    #generateHead(headLinesMat){
         const headSolidMat = new THREE.MeshBasicMaterial( { color: 0x000070});
         const head = new THREE.Object3D();
         const headSolidGeo = new THREE.BoxGeometry(40, 40, 40);
