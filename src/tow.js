@@ -20,7 +20,6 @@ const towEdges = new THREE.LineSegments(
 const towHandle = new THREE.Object3D();
 towHandle.add(towMesh);
 towHandle.add(towEdges);
-towHandle.position.set(0.0,0.0,0.0);
 towHandle.rotation.y = Math.PI / (-2);
 
 //create part for wheels
@@ -60,6 +59,8 @@ wheel1.rotation.y = Math.PI / (-2);
 wheel2.rotation.y = Math.PI / (-2);
 wheel3.rotation.y = Math.PI / (-2);
 wheel4.rotation.y = Math.PI / (-2);
+
+towHandle.position.set(0.0,135,0.0);
 
 export default {
     tow: towHandle,
