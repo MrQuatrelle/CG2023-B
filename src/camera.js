@@ -44,11 +44,20 @@ function setTarget(t) {
 }
 
 function update() {
-    /* TODO: it'd be nice if we could make something like this again...
-        camera1.aspect = window.innerWidth / window.innerHeight;
-        camera1.lookAt(target);
-        camera1.updateProjectionMatrix();
-    */
+    cameras.forEach((c) => {
+        if (c.isOrthographicCamera) {
+            c.right = window.innerWidth / 2;
+            c.left = -window.innerWidth / 2;
+            c.top = window.innerHeight / 2;
+            c.bottom = -window.innerHeight / 2;
+        }
+        else if(c.isPerspectiveCamera) {
+            c.aspect = window.innerWidth / window.innerHeight;
+        }
+
+        c.updateProjectionMatrix();
+    });
+    
 }
 
 //TODO: change this coordinates once the robot is added
@@ -60,13 +69,11 @@ isoPerspective.position.set(500, 500, 500);
 
 export default {
     setTarget: setTarget,
+    update: update,
     camera1: front,
     camera2: lateral,
     camera3: top,
     camera4: isoOrthographic,
     camera5: isoPerspective,
 }
-
-
-
 

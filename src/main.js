@@ -38,11 +38,15 @@ function main() {
 main();
 
 window.addEventListener("resize", () => {
-    cameraControl.update();
     renderer.setSize(window.innerWidth, window.innerHeight);
+    cameraControl.update();
 });
 
+let keysPressed = {};
+
 window.addEventListener("keydown", (e) => {
+    keysPressed[e.key] = true;
+
     switch (e.key) {
         case '1':
             console.log("[INFO]: showing camera1");
@@ -69,52 +73,55 @@ window.addEventListener("keydown", (e) => {
             camera = cameraControl.camera5;
             break;
 
-        case 'e':
-            console.log("[INFO]: moving arms inwards");
-            beepboop.moveArmsInwards();
-            break;
-
-        case 'd':
-            console.log("[INFO]: moving arms inwards");
-            beepboop.moveArmsOutwards();
-            break;
-
-        case 'q':
-            console.log("[INFO]: moving feet up");
-            beepboop.moveFeetUp();
-            break;
-
-        case 'a':
-            console.log("[INFO]: moving feet down");
-            beepboop.moveFeetDown();
-            break;
-
-       case 'ArrowDown':
-           console.log("[INFO]: moving tow +x");
-           trailer.translateX(5);
-           break;
-            
-       case 'ArrowUp':
-           console.log("[INFO]: moving tow -x");
-           trailer.translateX(-5);
-           break;
-            
-       case 'ArrowLeft':
-           console.log("[INFO]: moving tow +z");
-           trailer.translateZ(5);
-           break;
-
-       case 'ArrowRight':
-           console.log("[INFO]: moving tow -z");
-           trailer.translateZ(-5);
-           break;
-
         // for debugging purposes
         default:
             console.log(e);
             break;
-
-        // TODO: add the rest of the keybinds here
     }
+
+    if (keysPressed['e']) {
+        console.log("[INFO]: moving arms inwards");
+        beepboop.moveArmsInwards();
+    }
+
+    if (keysPressed['d']) {
+        console.log("[INFO]: moving arms inwards");
+        beepboop.moveArmsOutwards();
+    }
+
+    if (keysPressed['q']) {
+        console.log("[INFO]: moving feet up");
+        beepboop.moveFeetUp();
+    }
+
+    if (keysPressed['a']) {
+        console.log("[INFO]: moving feet down");
+        beepboop.moveFeetDown();
+    }
+
+    if (keysPressed['ArrowDown']) {
+        console.log("[INFO]: moving tow +x");
+        trailer.translateX(5);
+    }
+
+    if (keysPressed['ArrowUp']) {
+        console.log("[INFO]: moving tow -x");
+        trailer.translateX(-5);
+    }
+
+    if (keysPressed['ArrowLeft']) {
+        console.log("[INFO]: moving tow +z");
+        trailer.translateZ(5);
+    }
+
+    if (keysPressed['ArrowRight']) {
+        console.log("[INFO]: moving tow -z");
+        trailer.translateZ(-5);
+    }
+
+    // TODO: add the rest of the keybinds here
 });
 
+window.addEventListener("keyup", (e) => {
+    delete keysPressed[e.key];
+});
