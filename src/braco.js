@@ -29,8 +29,8 @@ class Arm extends THREE.Object3D {
     }
     
     #generateForearm(){
-        const forearmGeom1 = new THREE.BoxGeometry(30, 30, 70);
-        const forearmGeom2 = new THREE.BoxGeometry(30, 10, 60);
+        const forearmGeom1 = new THREE.BoxGeometry(30, 30, 80);
+        const forearmGeom2 = new THREE.BoxGeometry(30, 15, 50);
         const forearmGeom3 = new THREE.BoxGeometry(30, 30, 30);
         const forearm1 = new THREE.Mesh(forearmGeom1,
             new THREE.MeshBasicMaterial({color: 0xff0000}));
@@ -58,11 +58,11 @@ class Arm extends THREE.Object3D {
             );
         const forearmObj1 = new THREE.Object3D();
         forearmObj1.add(forearm1, forearmEdges1);
-        forearmObj1.position.set(0,0,-45)
+        forearmObj1.position.set(0,0,-40)
 
         const forearmObj2 = new THREE.Object3D();
         forearmObj2.add(forearm2, forearmEdges2);
-        forearmObj2.position.set(0,10,20)
+        forearmObj2.position.set(0,7.5,25)
 
         const forearmObj3 = new THREE.Object3D();
         forearmObj3.add(forearm3, forearmEdges3);
