@@ -90,6 +90,20 @@ class Robot extends THREE.Object3D {
             }
         }
     }
+
+    moveFeetUp() {
+        if (this.#leftFoot.rotation.x < Math.PI / 2) {
+            this.#leftFoot.rotateX(Math.PI / 64);
+            this.#rightFoot.rotateX(Math.PI / 64);
+        }
+    }
+
+    moveFeetDown() {
+        if (this.#leftFoot.rotation.x > 0) {
+            this.#leftFoot.rotateX(-(Math.PI / 64));
+            this.#rightFoot.rotateX(-(Math.PI / 64));
+        }
+    }
 }
 
 export default {

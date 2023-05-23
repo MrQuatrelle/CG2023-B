@@ -75,6 +75,16 @@ window.addEventListener("keydown", (e) => {
             beepboop.moveArmsOutwards();
             break;
 
+        case 'q':
+            console.log("[INFO]: moving feet up");
+            beepboop.moveFeetUp();
+            break;
+
+        case 'a':
+            console.log("[INFO]: moving feet down");
+            beepboop.moveFeetDown();
+            break;
+
         // TODO: add the rest of the keybinds here
     }
 });
