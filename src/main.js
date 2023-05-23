@@ -5,6 +5,7 @@ import robot from "./robot.js";
 const scene = new THREE.Scene();
 const renderer = new THREE.WebGLRenderer();
 
+var beepboop;
 var camera;
 
 function animate() {
@@ -23,7 +24,7 @@ function main() {
     cameraControl.setTarget(new THREE.Vector3(95, 240, 110));
     camera = cameraControl.camera1;
 
-    const beepboop = new robot.Robot();
+    beepboop = new robot.Robot();
     scene.add(beepboop);
 
     animate();
@@ -42,23 +43,38 @@ window.addEventListener("keydown", (e) => {
             console.log("[INFO]: camera1");
             camera = cameraControl.camera1;
             break;
+
         case '2':
             console.log("[INFO]: camera2");
             camera = cameraControl.camera2;
             break;
+
         case '3':
             console.log("[INFO]: camera3");
             camera = cameraControl.camera3;
             break;
+
         case '4':
             console.log("[INFO]: camera4");
             camera = cameraControl.camera4;
             break;
+
         case '5':
             console.log("[INFO]: camera5");
             camera = cameraControl.camera5;
             break;
-        // TODO: add the rest of the keys
+
+        case 'e':
+            console.log("[INFO]: moving arms inwards");
+            beepboop.moveArmsInwards();
+            break;
+
+        case 'd':
+            console.log("[INFO]: moving arms inwards");
+            beepboop.moveArmsOutwards();
+            break;
+
+        // TODO: add the rest of the keybinds here
     }
 });
 

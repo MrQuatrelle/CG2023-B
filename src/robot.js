@@ -43,8 +43,6 @@ class Robot extends THREE.Object3D {
         this.add(this.#body, this.#head,
             this.#leftLeg, this.#rightLeg,
             this.#leftArm, this.#rightArm);
-
-        document.addEventListener("keydown", this.handleKeyDown.bind(this));
     }
 
     getLeftArmPositionZ() {
@@ -67,34 +65,29 @@ class Robot extends THREE.Object3D {
         this.position.set(110, 380, 80);
     }
 
-    handleKeyDown(event) {
-        switch (event.key) {
-            case 'e':
-                if (this.getLeftArmPositionZ() > -65) {
-                    this.#leftArm.translateZ(-1);
-                    this.#rightArm.translateZ(-1);
-                }
-                else {
-                    if (this.getLeftArmPositionX() > 65) {
-                        this.#leftArm.translateX(-1);
-                        this.#rightArm.translateX(1);
-                    }
-                }
+    moveArmsInwards() {
+        if (this.getLeftArmPositionZ() > -65) {
+            this.#leftArm.translateZ(-1);
+            this.#rightArm.translateZ(-1);
+        }
+        else {
+            if (this.getLeftArmPositionX() > 65) {
+                this.#leftArm.translateX(-1);
+                this.#rightArm.translateX(1);
+            }
+        }
+    }
 
-                break;
-
-            case 'd':
-                if (this.getLeftArmPositionX() < 95) {
-                    this.#leftArm.translateX(1);
-                    this.#rightArm.translateX(-1);
-                }
-                else {
-                    if (this.getLeftArmPositionZ() < -35) {
-                        this.#leftArm.translateZ(1);
-                        this.#rightArm.translateZ(1);
-                    }
-                }
-                break;
+    moveArmsOutwards() {
+        if (this.getLeftArmPositionX() < 95) {
+            this.#leftArm.translateX(1);
+            this.#rightArm.translateX(-1);
+        }
+        else {
+            if (this.getLeftArmPositionZ() < -35) {
+                this.#leftArm.translateZ(1);
+                this.#rightArm.translateZ(1);
+            }
         }
     }
 }
