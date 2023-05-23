@@ -6,13 +6,6 @@ import arm from "./braco.js";
 
 
 class Body extends THREE.Object3D {
-    #head;
-    #leftLeg;
-    #rightLeg;
-    #leftFoot;
-    #rightFoot;
-    #leftArm;
-    #rightArm;
 
     constructor() {
         super();
@@ -25,27 +18,8 @@ class Body extends THREE.Object3D {
         const waist = this.#generateWaist(bodyLinesMat);
         waist.position.set(0, -130, 0);
 
-        this.#head = new head.Head();
-        this.#head.position.set(0, 60, 40);
 
-        this.#leftLeg = new legs.Leg();
-        this.#leftFoot = this.#leftLeg.getFoot();
-        this.#leftFoot.translateX(10);
-        this.#leftLeg.position.set(30, -120, 0);
-        this.#leftLeg.isLeft();
-
-        this.#rightLeg = new legs.Leg();
-        this.#rightFoot = this.#rightLeg.getFoot();
-        this.#rightFoot.translateX(-10);
-        this.#rightLeg.position.set(-30, -120, 0);
-        this.#rightLeg.isRight();
-
-        this.#rightArm = new arm.Arm();
-        this.#rightArm.position.set(15,315,45)
-        this.#leftArm = new arm.Arm();
-        this.#leftArm.position.set(175,315,45)
-        this.reset();
-        this.add(chest, belly, waist, this.#head, this.#leftLeg, this.#rightLeg, this.#leftArm, this.#rightArm);
+        this.add(chest, belly, waist);
     }
 
     #generateChest(bodyLinesMat) {
@@ -138,9 +112,7 @@ class Body extends THREE.Object3D {
         return waist;
     }
 
-    reset() {
-        this.position.set(110, 380, 80);
-    }
+
 }
 
 export default {

@@ -1,6 +1,6 @@
 import * as THREE from "three";
 import cameraControl from "./camera.js";
-import Body from "./body.js";
+import robot from "./robot.js";
 
 const scene = new THREE.Scene();
 const renderer = new THREE.WebGLRenderer();
@@ -23,8 +23,8 @@ function main() {
     cameraControl.setTarget(new THREE.Vector3(95, 240, 110));
     camera = cameraControl.camera1;
 
-    const body = new Body.Body();
-    scene.add(body);
+    const beepboop = new robot.Robot();
+    scene.add(beepboop);
 
     animate();
 }
