@@ -39,13 +39,63 @@ class Robot extends THREE.Object3D {
         this.#leftArm = new arm.Arm();
         this.#leftArm.position.set(95, -25, -35);
         this.reset();
+
         this.add(this.#body, this.#head,
             this.#leftLeg, this.#rightLeg,
             this.#leftArm, this.#rightArm);
+
+        document.addEventListener("keydown", this.handleKeyDown.bind(this));
+    }
+
+    getLeftArmPositionZ() {
+        return this.#leftArm.position.z;
+    }
+
+    getLeftArmPositionX() {
+        return this.#leftArm.position.x;
+    }
+
+    getRightArmPositionZ() {
+        return this.#rightArm.position.z;
+    }
+
+    getRightArmPositionX() {
+        return this.#rightArm.position.z;
     }
 
     reset() {
         this.position.set(110, 380, 80);
+    }
+
+    handleKeyDown(event) {
+        switch (event.key) {
+            case 'e':
+                if (this.getLeftArmPositionZ() > -65) {
+                    this.#leftArm.translateZ(-1);
+                    this.#rightArm.translateZ(-1);
+                }
+                else {
+                    if (this.getLeftArmPositionX() > 65) {
+                        this.#leftArm.translateX(-1);
+                        this.#rightArm.translateX(1);
+                    }
+                }
+
+                break;
+
+            case 'd':
+                if (this.getLeftArmPositionX() < 95) {
+                    this.#leftArm.translateX(1);
+                    this.#rightArm.translateX(-1);
+                }
+                else {
+                    if (this.getLeftArmPositionZ() < -35) {
+                        this.#leftArm.translateZ(1);
+                        this.#rightArm.translateZ(1);
+                    }
+                }
+                break;
+        }
     }
 }
 
