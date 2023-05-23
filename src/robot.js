@@ -5,21 +5,22 @@ import legs from "./legs.js"
 import head from "./head.js"
 
 
-class Robot extends THREE.Object3D{
-	#body
-	#head
+class Robot extends THREE.Object3D {
+    #body
+    #head
     #leftLeg;
     #rightLeg;
     #leftFoot;
     #rightFoot;
     #leftArm;
     #rightArm;
-    constructor(){
-    	super();
+
+    constructor() {
+        super();
         this.#head = new head.Head();
         this.#head.position.set(0, 60, 40);
 
-    	this.#body = new body.Body();
+        this.#body = new body.Body();
 
         this.#leftLeg = new legs.Leg();
         this.#leftFoot = this.#leftLeg.getFoot();
@@ -34,12 +35,15 @@ class Robot extends THREE.Object3D{
         this.#rightLeg.isRight();
 
         this.#rightArm = new arm.Arm();
-        this.#rightArm.position.set(-95, -25,-35);
+        this.#rightArm.position.set(-95, -25, -35);
         this.#leftArm = new arm.Arm();
-        this.#leftArm.position.set(95,-25,-35);
+        this.#leftArm.position.set(95, -25, -35);
         this.reset();
-        this.add(this.#body, this.#head, this.#head, this.#leftLeg, this.#rightLeg,this.#leftArm, this.#rightArm);
-        
+        this.add(this.#body, this.#head, this.#head,
+            this.#leftLeg, this.#rightLeg,
+            this.#leftArm, this.#rightArm
+        );
+
         document.addEventListener("keydown", this.handleKeyDown.bind(this));
     }
 
@@ -58,34 +62,34 @@ class Robot extends THREE.Object3D{
     getRightArmPositionX() {
         return this.#rightArm.position.z;
     }
-    
+
     reset() {
         this.position.set(110, 380, 80);
     }
+
     handleKeyDown(event) {
-        
-        switch(event.key){
+        switch (event.key) {
             case 'e':
-                if( this.getLeftArmPositionZ() > -65){
+                if (this.getLeftArmPositionZ() > -65) {
                     this.#leftArm.translateZ(-1);
                     this.#rightArm.translateZ(-1);
                 }
-                else{
-                    if(this.getLeftArmPositionX() > 65){
+                else {
+                    if (this.getLeftArmPositionX() > 65) {
                         this.#leftArm.translateX(-1);
                         this.#rightArm.translateX(1);
                     }
                 }
-                
+
                 break;
-            
+
             case 'd':
-                if( this.getLeftArmPositionX() < 95){
+                if (this.getLeftArmPositionX() < 95) {
                     this.#leftArm.translateX(1);
                     this.#rightArm.translateX(-1);
                 }
-                else{
-                    if(this.getLeftArmPositionZ() < -35){
+                else {
+                    if (this.getLeftArmPositionZ() < -35) {
                         this.#leftArm.translateZ(1);
                         this.#rightArm.translateZ(1);
                     }
@@ -96,5 +100,5 @@ class Robot extends THREE.Object3D{
 }
 
 export default {
-	Robot: Robot
+    Robot: Robot
 }
