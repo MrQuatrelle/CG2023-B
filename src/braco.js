@@ -29,18 +29,48 @@ class Arm extends THREE.Object3D {
     }
     
     #generateForearm(){
-        const forearmGeom = new THREE.BoxGeometry(30, 30, 160);
-        const forearm = new THREE.Mesh(forearmGeom,
+        const forearmGeom1 = new THREE.BoxGeometry(30, 30, 70);
+        const forearmGeom2 = new THREE.BoxGeometry(30, 10, 60);
+        const forearmGeom3 = new THREE.BoxGeometry(30, 30, 30);
+        const forearm1 = new THREE.Mesh(forearmGeom1,
             new THREE.MeshBasicMaterial({color: 0xff0000}));
-        const forearmEdges = new THREE.LineSegments(
-            new THREE.EdgesGeometry(forearmGeom),
+        const forearmEdges1 = new THREE.LineSegments(
+            new THREE.EdgesGeometry(forearmGeom1),
             new THREE.LineBasicMaterial({
                 color: 0x000000,
                 linewidth: 2 })
             );
+        const forearm2 = new THREE.Mesh(forearmGeom2,
+            new THREE.MeshBasicMaterial({color: 0xff0000}));
+        const forearmEdges2 = new THREE.LineSegments(
+            new THREE.EdgesGeometry(forearmGeom2),
+            new THREE.LineBasicMaterial({
+                color: 0x000000,
+                linewidth: 2 })
+            );
+        const forearm3 = new THREE.Mesh(forearmGeom3,
+            new THREE.MeshBasicMaterial({color: 0xff0000}));
+        const forearmEdges3 = new THREE.LineSegments(
+            new THREE.EdgesGeometry(forearmGeom3),
+            new THREE.LineBasicMaterial({
+                color: 0x000000,
+                linewidth: 2 })
+            );
+        const forearmObj1 = new THREE.Object3D();
+        forearmObj1.add(forearm1, forearmEdges1);
+        forearmObj1.position.set(0,0,-45)
+
+        const forearmObj2 = new THREE.Object3D();
+        forearmObj2.add(forearm2, forearmEdges2);
+        forearmObj2.position.set(0,10,20)
+
+        const forearmObj3 = new THREE.Object3D();
+        forearmObj3.add(forearm3, forearmEdges3);
+        forearmObj3.position.set(0,0,60)
+
         const forearmHandler = new THREE.Object3D();
-        forearmHandler.add(forearm);
-        forearmHandler.add(forearmEdges);
+        forearmHandler.add(forearmObj1, forearmObj2, forearmObj3);
+
         return forearmHandler;
     }
 
