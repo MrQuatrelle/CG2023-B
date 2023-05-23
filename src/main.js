@@ -99,6 +99,16 @@ window.addEventListener("keydown", (e) => {
         beepboop.moveFeetDown();
     }
 
+    if (keysPressed['w']) {
+        console.log("[INFO]: Showing head");
+        beepboop.rotateHeadUp();
+    }
+
+    if (keysPressed['s']) {
+        console.log("[INFO]: Hidding head");
+        beepboop.rotateHeadDown();
+    }
+
     if (keysPressed['ArrowDown']) {
         console.log("[INFO]: moving tow +x");
         trailer.translateX(5);
