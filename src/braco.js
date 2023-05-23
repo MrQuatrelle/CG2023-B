@@ -66,7 +66,7 @@ class Arm extends THREE.Object3D {
 
         const forearmObj3 = new THREE.Object3D();
         forearmObj3.add(forearm3, forearmEdges3);
-        forearmObj3.position.set(0,0,60)
+        forearmObj3.position.set(0,0,65)
 
         const forearmHandler = new THREE.Object3D();
         forearmHandler.add(forearmObj1, forearmObj2, forearmObj3);
