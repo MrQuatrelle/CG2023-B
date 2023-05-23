@@ -28,7 +28,7 @@ function main() {
 
     beepboop = new robot.Robot();
     trailer = new tow.Tow();
-    trailer.position.set(400, 140, 240);
+    trailer.position.set(110, 140, -280);
 
     scene.add(beepboop, trailer);
 
