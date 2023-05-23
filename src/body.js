@@ -2,6 +2,7 @@ import * as THREE from "three";
 import wheel from "./wheels.js";
 import head from "./head.js";
 import legs from "./legs.js";
+import arm from "./braco.js";
 
 
 class Body extends THREE.Object3D {
@@ -10,6 +11,8 @@ class Body extends THREE.Object3D {
     #rightLeg;
     #leftFoot;
     #rightFoot;
+    #leftArm;
+    #rightArm;
 
     constructor() {
         super();
@@ -37,8 +40,12 @@ class Body extends THREE.Object3D {
         this.#rightLeg.position.set(-30, -120, 0);
         this.#rightLeg.isRight();
 
+        this.#rightArm = new arm.Arm();
+        this.#rightArm.position.set(15,315,45)
+        this.#leftArm = new arm.Arm();
+        this.#leftArm.position.set(175,315,45)
         this.reset();
-        this.add(chest, belly, waist, this.#head, this.#leftLeg, this.#rightLeg);
+        this.add(chest, belly, waist, this.#head, this.#leftLeg, this.#rightLeg, this.#leftArm, this.#rightArm);
     }
 
     #generateChest(bodyLinesMat) {
