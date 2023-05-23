@@ -96,6 +96,10 @@ class Robot extends THREE.Object3D {
             this.#leftFoot.rotateX(Math.PI / 64);
             this.#rightFoot.rotateX(Math.PI / 64);
         }
+        /*else (sumconditionaboutlimits) {
+            this.#leftFoot.translateY(1);
+            this.#rightFoot.translateY(1);
+        }*/
     }
 
     moveFeetDown() {
