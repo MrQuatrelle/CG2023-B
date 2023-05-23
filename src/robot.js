@@ -18,7 +18,7 @@ class Robot extends THREE.Object3D {
     constructor() {
         super();
         this.#head = new head.Head();
-        this.#head.position.set(0, 60, 40);
+        this.#head.position.set(0, 40, 60);
 
         this.#body = new body.Body();
 
@@ -103,6 +103,18 @@ class Robot extends THREE.Object3D {
             this.#leftFoot.rotateX(-(Math.PI / 64));
             this.#rightFoot.rotateX(-(Math.PI / 64));
         }
+    }
+    rotateHeadUp(){
+        if(this.#head.rotation.x <0){
+            this.#head.rotateX(Math.PI / 64);
+
+        }
+    }
+    rotateHeadDown(){
+        if(this.#head.rotation.x > -Math.PI /2){
+            this.#head.rotateX(-Math.PI / 64);
+        }
+
     }
 }
 
