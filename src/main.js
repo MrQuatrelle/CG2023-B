@@ -19,8 +19,9 @@ function main() {
     // initializations
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(renderer.domElement);
-
+    scene.background = new THREE.Color(0xdddddd);
     scene.add(new THREE.AxesHelper(600));
+
     cameraControl.setTarget(new THREE.Vector3(95, 240, 110));
     camera = cameraControl.camera1;
 
