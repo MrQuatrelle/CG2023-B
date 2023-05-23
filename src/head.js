@@ -8,11 +8,14 @@ class Head extends THREE.Object3D {
         const head = this.#generateHead(headLinesMat);
         const antenna1 = this.#generateAntenna(headLinesMat);
         const antenna2 = this.#generateAntenna(headLinesMat);
+        head.position.set(0,20,-20);
+        antenna1.position.set(-15,50,-35);
+        antenna2.position.set(15,50,-35);
+        const chin = new THREE.Object3D();
+        chin.add(head, antenna1, antenna2);
 
-        antenna1.position.set(-15,30,-15);
-        antenna2.position.set(15,30,-15);
 
-        this.add(head, antenna1, antenna2);
+        this.add(chin);
     }
     #generateAntenna(headLinesMat){
         const antennaSolidMat = new THREE.MeshBasicMaterial( { color: 0x000070});
