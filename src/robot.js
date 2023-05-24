@@ -45,6 +45,16 @@ class Robot extends THREE.Object3D {
         this.add(this.#body, this.#head,
             this.#leftLeg, this.#rightLeg,
             this.#leftArm, this.#rightArm);
+
+    }
+
+    toggleWireframe() {
+        this.parent.traverse((c) => {
+            if (c.isMesh) {
+                c.material.wireframe = !(c.material.wireframe);
+                c.material.needsUpdate = true;
+            }
+        });
     }
 
     getLeftArmPositionZ() {

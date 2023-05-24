@@ -78,6 +78,11 @@ window.addEventListener("keydown", (e) => {
             console.log(e);
             break;
     }
+    
+    if (keysPressed['6']) {
+        console.log("[INFO]: toggling wireframe");
+        beepboop.toggleWireframe();
+    }
 
     if (keysPressed['w']) {
         console.log("[INFO]: moving tow -z");
