@@ -28,9 +28,13 @@ function main() {
 
     beepboop = new robot.Robot();
     trailer = new tow.Tow();
-    trailer.position.set(110, 135, -280);
 
-    scene.add(beepboop, trailer);
+    trailer.position.set(110, 135, -280);
+    trailer.hitboxHelper.update();
+
+    trailer.watch(beepboop.hitbox);
+
+    scene.add(beepboop, beepboop.hitboxHelper, trailer, trailer.hitboxHelper);
 
     animate();
 }
@@ -75,10 +79,9 @@ window.addEventListener("keydown", (e) => {
 
         // for debugging purposes
         default:
-            console.log(e);
             break;
     }
-    
+
     if (keysPressed['6']) {
         console.log("[INFO]: toggling wireframe");
         beepboop.toggleWireframe();
@@ -126,24 +129,33 @@ window.addEventListener("keydown", (e) => {
 
     if (keysPressed['ArrowDown']) {
         console.log("[INFO]: moving tow +x");
-        trailer.translateX(5);
+        trailer.moveDown();
     }
 
     if (keysPressed['ArrowUp']) {
         console.log("[INFO]: moving tow -x");
-        trailer.translateX(-5);
+        trailer.moveUp();
     }
 
     if (keysPressed['ArrowLeft']) {
         console.log("[INFO]: moving tow +z");
-        trailer.translateZ(5);
+        trailer.moveLeft();
     }
 
     if (keysPressed['ArrowRight']) {
         console.log("[INFO]: moving tow -z");
-        trailer.translateZ(-5);
+        trailer.moveRight();
     }
     // TODO: add the rest of the keybinds here
+
+    // TODO: remove this (debugging towing)
+    if (keysPressed['b']) {
+        console.log("towing");
+        trailer.plugInto(new THREE.Vector3()
+            .add(beepboop.towPoint.position)
+            .add(beepboop.position)
+        );
+    }
 });
 
 window.addEventListener("keyup", (e) => {
