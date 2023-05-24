@@ -15,6 +15,8 @@ class Robot extends THREE.Object3D {
     #leftArm;
     #rightArm;
 
+    #positionOffset;
+
     constructor() {
         super();
         this.#head = new head.Head();
@@ -25,13 +27,13 @@ class Robot extends THREE.Object3D {
         this.#leftLeg = new legs.Leg();
         this.#leftFoot = this.#leftLeg.getFoot();
         this.#leftFoot.translateX(10);
-        this.#leftLeg.position.set(30, -120, 0);
+        this.#leftLeg.position.set(30, -110, 0);
         this.#leftLeg.isLeft();
 
         this.#rightLeg = new legs.Leg();
         this.#rightFoot = this.#rightLeg.getFoot();
         this.#rightFoot.translateX(-10);
-        this.#rightLeg.position.set(-30, -120, 0);
+        this.#rightLeg.position.set(-30, -110, 0);
         this.#rightLeg.isRight();
 
         this.#rightArm = new arm.Arm();
@@ -62,7 +64,7 @@ class Robot extends THREE.Object3D {
     }
 
     reset() {
-        this.position.set(110, 380, 80);
+        this.position.set(110, 370, 280);
     }
 
     moveArmsInwards() {
@@ -95,6 +97,7 @@ class Robot extends THREE.Object3D {
         if (this.#leftFoot.rotation.x < Math.PI / 2) {
             this.#leftFoot.rotateX(Math.PI / 64);
             this.#rightFoot.rotateX(Math.PI / 64);
+            this.#updateHeight();
         }
         /*else (sumconditionaboutlimits) {
             this.#leftFoot.translateY(1);
@@ -106,19 +109,47 @@ class Robot extends THREE.Object3D {
         if (this.#leftFoot.rotation.x > 0) {
             this.#leftFoot.rotateX(-(Math.PI / 64));
             this.#rightFoot.rotateX(-(Math.PI / 64));
+            this.#updateHeight();
         }
     }
-    rotateHeadUp(){
-        if(this.#head.rotation.x <0){
+    rotateHeadUp() {
+        if (this.#head.rotation.x < 0) {
             this.#head.rotateX(Math.PI / 64);
 
         }
     }
-    rotateHeadDown(){
-        if(this.#head.rotation.x > -Math.PI /2){
+    rotateHeadDown() {
+        if (this.#head.rotation.x > -Math.PI / 2) {
             this.#head.rotateX(-Math.PI / 64);
         }
+    }
 
+    rotateLegsUp() {
+        if (this.#leftLeg.rotation.x < Math.PI / 2) {
+            this.#leftLeg.rotateX(Math.PI / 64);
+            this.#rightLeg.rotateX(Math.PI / 64);
+            this.#updateHeight();
+        }
+        console.log("[INFO] height = ", this.position.x);
+    }
+
+    rotateLegsDown() {
+        if (this.#leftLeg.rotation.x > 0) {
+            this.#leftLeg.rotateX(-Math.PI / 64);
+            this.#rightLeg.rotateX(-Math.PI / 64);
+            this.#updateHeight();
+        }
+    }
+
+    #updateHeight() {
+        var footOffset = Math.sin(this.#leftFoot.rotation.x +
+            this.#leftLeg.rotation.x) * 80; // 80 = foot length
+        footOffset += Math.cos(this.#leftFoot.rotation.x +
+            this.#leftLeg.rotation.x) * 20; // 80 = foot length
+        const legOffset = Math.cos(this.#leftLeg.rotation.x) * 240; // 340 = leg length
+        const offset = Math.max(footOffset + legOffset + 110, 165);
+        console.log("[INFO] offset = ", offset);
+        this.position.y = offset;
     }
 }
 

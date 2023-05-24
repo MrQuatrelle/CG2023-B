@@ -28,7 +28,7 @@ function main() {
 
     beepboop = new robot.Robot();
     trailer = new tow.Tow();
-    trailer.position.set(110, 140, -280);
+    trailer.position.set(110, 135, -280);
 
     scene.add(beepboop, trailer);
 
@@ -79,6 +79,16 @@ window.addEventListener("keydown", (e) => {
             break;
     }
 
+    if (keysPressed['w']) {
+        console.log("[INFO]: moving tow -z");
+        beepboop.rotateLegsUp();
+    }
+
+    if (keysPressed['s']) {
+        console.log("[INFO]: moving tow -z");
+        beepboop.rotateLegsDown();
+    }
+
     if (keysPressed['e']) {
         console.log("[INFO]: moving arms inwards");
         beepboop.moveArmsInwards();
@@ -99,12 +109,12 @@ window.addEventListener("keydown", (e) => {
         beepboop.moveFeetDown();
     }
 
-    if (keysPressed['w']) {
+    if (keysPressed['f']) {
         console.log("[INFO]: Showing head");
         beepboop.rotateHeadUp();
     }
 
-    if (keysPressed['s']) {
+    if (keysPressed['r']) {
         console.log("[INFO]: Hidding head");
         beepboop.rotateHeadDown();
     }
@@ -128,7 +138,6 @@ window.addEventListener("keydown", (e) => {
         console.log("[INFO]: moving tow -z");
         trailer.translateZ(-5);
     }
-
     // TODO: add the rest of the keybinds here
 });
 

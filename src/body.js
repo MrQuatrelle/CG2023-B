@@ -103,9 +103,9 @@ class Body extends THREE.Object3D {
         waist2.position.set(0, 0, -10);
 
         const wheel1 = new wheel.Wheel();
-        wheel1.position.set(-70, -5, 25);
+        wheel1.position.set(-70, -10, 25);
         const wheel2 = new wheel.Wheel();
-        wheel2.position.set(70, -5, 25);
+        wheel2.position.set(70, -10, 25);
 
         const waist = new THREE.Object3D();
         waist.add(waist1, waist2, wheel1, wheel2);

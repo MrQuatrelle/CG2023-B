@@ -20,10 +20,10 @@ class Leg extends THREE.Object3D {
         this.#foot.position.set(0, -240, 0);
 
         this.#topWheel = new wheels.Wheel();
-        this.#topWheel.position.set(0, -125, 35);
+        this.#topWheel.position.set(0, -125, 30);
 
         this.#bottomWheel = new wheels.Wheel()
-        this.#bottomWheel.position.set(0, -195, 35);
+        this.#bottomWheel.position.set(0, -195, 30);
 
         this.add(leg, thy, this.#foot, this.#topWheel, this.#bottomWheel);
     }
