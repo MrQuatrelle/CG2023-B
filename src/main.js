@@ -14,6 +14,7 @@ function animate() {
     // function
     requestAnimationFrame(animate);
     renderer.render(scene, camera);
+    beepboop.update();
 }
 
 function main() {
@@ -78,6 +79,11 @@ window.addEventListener("keydown", (e) => {
             camera = cameraControl.camera5;
             break;
 
+        case 'a':
+            console.log("[INFO]: moving feet down");
+            beepboop.moveFeetDown();
+            break;
+
         // for debugging purposes
         default:
             break;
@@ -113,11 +119,6 @@ window.addEventListener("keydown", (e) => {
         beepboop.moveFeetUp();
     }
 
-    if (keysPressed['a']) {
-        console.log("[INFO]: moving feet down");
-        beepboop.moveFeetDown();
-    }
-
     if (keysPressed['f']) {
         console.log("[INFO]: Showing head");
         beepboop.rotateHeadUp();
@@ -150,5 +151,10 @@ window.addEventListener("keydown", (e) => {
 });
 
 window.addEventListener("keyup", (e) => {
+    switch (e.key) {
+        case 'a':
+            beepboop.stopFeet();
+            break;
+    }
     delete keysPressed[e.key];
 });

@@ -7,13 +7,19 @@ import head from "./head.js"
 
 class Robot extends THREE.Object3D {
     #body
+
     #head
+
     #leftLeg;
     #rightLeg;
+
     #leftFoot;
     #rightFoot;
+    #feetState;
+
     #leftArm;
     #rightArm;
+
     #truck;
 
     hitboxHelper;
@@ -28,21 +34,25 @@ class Robot extends THREE.Object3D {
         this.#body = new body.Body();
 
         this.#leftLeg = new legs.Leg();
-        this.#leftFoot = this.#leftLeg.getFoot();
-        this.#leftFoot.translateX(10);
-        this.#leftLeg.position.set(30, -110, 0);
         this.#leftLeg.isLeft();
+        this.#leftLeg.position.set(30, -110, 0);
 
         this.#rightLeg = new legs.Leg();
+        this.#rightLeg.isRight();
+        this.#rightLeg.position.set(-30, -110, 0);
+
+        this.#leftFoot = this.#leftLeg.getFoot();
+        this.#leftFoot.translateX(10);
         this.#rightFoot = this.#rightLeg.getFoot();
         this.#rightFoot.translateX(-10);
-        this.#rightLeg.position.set(-30, -110, 0);
-        this.#rightLeg.isRight();
+        this.#feetState = new feetStillState();
 
         this.#rightArm = new arm.Arm();
         this.#rightArm.position.set(-95, -25, -35);
+
         this.#leftArm = new arm.Arm();
         this.#leftArm.position.set(95, -25, -35);
+
         this.#truck = false;
 
         this.towPoint = new THREE.Object3D();
@@ -60,6 +70,26 @@ class Robot extends THREE.Object3D {
         this.reset();
     }
 
+    update() {
+        this.#moveFeet();
+    }
+
+    moveFeetDown() {
+        if (this.#feetState.isMoving == false) {
+            console.log("here");
+            this.#feetState = new feetDownState();
+        }
+    }
+
+    stopFeet() {
+        this.#feetState = new feetStillState();
+    }
+
+    #moveFeet() {
+        this.#feetState.move(this);
+        this.#updateHeight();
+    }
+
     /**
     * toggles on/off the wiref_r_ame of the whole robot.
     */
@@ -70,6 +100,30 @@ class Robot extends THREE.Object3D {
                 c.material.needsUpdate = true;
             }
         });
+    }
+
+    getLeftArm() {
+        return this.#leftArm;
+    }
+
+    getRightArm() {
+        return this.#rightArm;
+    }
+
+    getLeftLeg() {
+        return this.#leftLeg;
+    }
+
+    getRightLeg() {
+        return this.#rightLeg;
+    }
+
+    getLeftFoot() {
+        return this.#leftFoot;
+    }
+
+    getRightFoot() {
+        return this.#rightFoot;
     }
 
     // BUG: are this methods even worth it?
@@ -131,13 +185,6 @@ class Robot extends THREE.Object3D {
         }
     }
 
-    moveFeetDown() {
-        if (this.#leftFoot.rotation.x > 0) {
-            this.#leftFoot.rotateX(-(Math.PI / 64));
-            this.#rightFoot.rotateX(-(Math.PI / 64));
-            this.#updateHeight();
-        }
-    }
     rotateHeadUp() {
         if (this.#head.rotation.x < 0) {
             this.#head.rotateX(Math.PI / 64);
@@ -203,19 +250,158 @@ class Robot extends THREE.Object3D {
 }
 
 
+class armsStillState {
+    isMoving = false;
 
-
-
-
-
-
-abstract class doArmMovement {
+    moveArmsInwards(robot) {
+        // do nothing
+    }
+    moveArmsOutwards(robot) {
+        // do nothing
+    }
 }
 
+class armsOutwardsState extends armsStillState {
+    isMoving = true;
 
+    moveArmsOutwards(robot) {
+        if (robot.getLeftArmPositionX() < 95) {
+            robot.getLeftArm().translateX(2);
+            robot.getRightArm().translateX(-2);
+        }
+        else {
+            if (robot.getLeftArmPositionZ() < -35) {
+                robot.getLeftArm().translateZ(2);
+                robot.getRightArm().translateZ(2);
+            }
+        }
+    }
+}
 
+class armsInState extends armsStillState {
+    isMoving = true;
 
+    moveArmsInwards(robot) {
+        if (robot.getLeftArmPositionZ() > -65) {
+            robot.getLeftArm().translateZ(-2);
+            robot.getRightArm().translateZ(-2);
+        }
+        else if (robot.getLeftArmPositionX() > 65) {
+            robot.getLeftArm().translateX(-2);
+            robot.getRightArm().translateX(2);
+        }
+    }
+}
 
+class legsStillState {
+    isMoving = false;
+
+    rotateLegsUp(robot) {
+        // do nothing
+    }
+
+    rotateLegsDown(robot) {
+        // do nothing
+    }
+}
+
+class legsDownState extends legsStillState {
+    isMoving = true;
+
+    rotateLegsDown(robot) {
+        if (robot.getLeftLeg().rotation.x > 0) {
+            robot.getLeftLeg().rotateX(-Math.PI / 64);
+            robot.getRightLeg().rotateX(-Math.PI / 64);
+        }
+    }
+}
+
+class legsUpState extends legsStillState {
+    isMoving = true;
+
+    rotateLegsUp(robot) {
+        if (robot.getRightLeg().rotation.x < Math.PI / 2) {
+            robot.getLeftLeg().rotateX(Math.PI / 64);
+            robot.getRightLeg().rotateX(Math.PI / 64);
+        }
+    }
+}
+
+class headStillState {
+    isMoving = false;
+
+    rotateHeadUp() {
+        // do nothing
+    }
+    rotateHeadDown() {
+        // do nothing
+    }
+}
+
+class headUpState extends headStillState {
+    isMoving = true;
+
+    rotateHeadUp(robot) {
+        if (robot.getHead().rotation.x < 0) {
+            robot.getHead().rotateX(Math.PI / 64);
+        }
+    }
+}
+
+class headDownState extends headStillState {
+    isMoving = true;
+
+    rotateHeadDown(robot) {
+        if (robot.getHead().rotation.x > -Math.PI / 2) {
+            robot.getHead().rotateX(-Math.PI / 64);
+        }
+    }
+}
+
+class feetStillState {
+    isMoving = false;
+
+    constructor() {}
+
+    move(robot) {
+        // do nothing
+    }
+}
+
+class feeUpState extends feetStillState {
+    isMoving = true;
+    #clock;
+
+    constructor() {
+        this.#clock = new THREE.Clock();
+    }
+
+    move(robot) {
+        if (robot.getLeftFoot().rotation.x < Math.PI / 2) {
+            robot.getLeftFoot().rotateX(Math.PI / 64);
+            robot.getRighttFoot().rotateX(Math.PI / 64);
+        }
+    }
+}
+
+class feetDownState extends feetStillState {
+    isMoving = true;
+    #clock;
+
+    constructor() {
+        super();
+        this.#clock = new THREE.Clock();
+        this.#clock.start();
+    }
+
+    move(robot) {
+        let delta = this.#clock.getDelta();
+        delta *= (Math.PI / 2);
+        delta = Math.min(delta, robot.getLeftFoot().rotation.x);
+        robot.getLeftFoot().rotateX(-delta);
+        robot.getRightFoot().rotateX(-delta);
+    }
+}
 
 export default {
     Robot: Robot
