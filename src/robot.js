@@ -57,11 +57,16 @@ class Robot extends THREE.Object3D {
             this.#leftArm, this.#rightArm,
             this.towPoint, buffer);
 
-        this.hitboxHelper = new THREE.BoxHelper(this);
-        this.hitbox = new THREE.Box3(this);
+        this.hitbox = new THREE.Box3();
+        // TODO: Remove this in the end!
+        this.hitboxHelper = new THREE.Box3Helper(this.hitbox, { color: 0xff0000 });
+        console.log(this.hitbox);
         this.reset();
     }
 
+    /**
+    * toggles on/off the wiref_r_ame of the whole robot.
+    */
     toggleWireframe() {
         this.parent.traverse((c) => {
             if (c.isMesh) {
@@ -72,28 +77,28 @@ class Robot extends THREE.Object3D {
     }
 
     getLeftArmPositionZ() {
-        this.hitboxHelper.update();
+        this.#updateHeight();
         return this.#leftArm.position.z;
     }
 
     getLeftArmPositionX() {
-        this.hitboxHelper.update();
+        this.#updateHeight();
         return this.#leftArm.position.x;
     }
 
     getRightArmPositionZ() {
-        this.hitboxHelper.update();
+        this.#updateHeight();
         return this.#rightArm.position.z;
     }
 
     getRightArmPositionX() {
-        this.hitboxHelper.update();
+        this.#updateHeight();
         return this.#rightArm.position.z;
     }
 
     reset() {
         this.position.set(110, 370, 280);
-        this.hitboxHelper.update();
+        this.#updateHeight();
     }
 
     moveArmsInwards() {
@@ -107,7 +112,7 @@ class Robot extends THREE.Object3D {
                 this.#rightArm.translateX(2);
             }
         }
-        this.hitboxHelper.update();
+        this.#updateHeight();
     }
 
     moveArmsOutwards() {
@@ -121,7 +126,7 @@ class Robot extends THREE.Object3D {
                 this.#rightArm.translateZ(2);
             }
         }
-        this.hitboxHelper.update();
+        this.#updateHeight();
     }
 
     moveFeetUp() {
@@ -130,6 +135,7 @@ class Robot extends THREE.Object3D {
             this.#rightFoot.rotateX(Math.PI / 64);
             this.#updateHeight();
         }
+        this.#updateHeight();
     }
 
     moveFeetDown() {
@@ -138,17 +144,20 @@ class Robot extends THREE.Object3D {
             this.#rightFoot.rotateX(-(Math.PI / 64));
             this.#updateHeight();
         }
+        this.#updateHeight();
     }
     rotateHeadUp() {
         if (this.#head.rotation.x < 0) {
             this.#head.rotateX(Math.PI / 64);
 
         }
+        this.#updateHeight();
     }
     rotateHeadDown() {
         if (this.#head.rotation.x > -Math.PI / 2) {
             this.#head.rotateX(-Math.PI / 64);
         }
+        this.#updateHeight();
     }
 
     rotateLegsUp() {
@@ -175,8 +184,7 @@ class Robot extends THREE.Object3D {
         const legOffset = Math.cos(this.#leftLeg.rotation.x) * 240; // 340 = leg length
         const offset = Math.max(footOffset + legOffset + 110, 165);
         this.position.y = offset;
-        this.hitboxHelper.update();
-        this.hitbox.applyMatrix4(this.matrixWorld);
+        this.hitbox.setFromObject(this);
     }
 }
 

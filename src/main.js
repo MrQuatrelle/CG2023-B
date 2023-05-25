@@ -29,9 +29,10 @@ function main() {
     beepboop = new robot.Robot();
     trailer = new tow.Tow();
 
+    // TODO: maybe this could refactored into the trailer itself, like the robot
     trailer.position.set(110, 135, -280);
-    trailer.hitboxHelper.update();
-
+    trailer.hitbox.setFromObject(trailer);
+    //
     trailer.watch(beepboop.hitbox);
 
     scene.add(beepboop, beepboop.hitboxHelper, trailer, trailer.hitboxHelper);
@@ -145,16 +146,6 @@ window.addEventListener("keydown", (e) => {
     if (keysPressed['ArrowRight']) {
         console.log("[INFO]: moving tow -z");
         trailer.moveRight();
-    }
-    // TODO: add the rest of the keybinds here
-
-    // TODO: remove this (debugging towing)
-    if (keysPressed['b']) {
-        console.log("towing");
-        trailer.plugInto(new THREE.Vector3()
-            .add(beepboop.towPoint.position)
-            .add(beepboop.position)
-        );
     }
 });
 

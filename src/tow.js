@@ -30,27 +30,27 @@ class Tow extends THREE.Object3D {
 
         support.add(wheel1, wheel2, wheel3, wheel4);
 
-        // TODO: remove this (debugging towing)
-        const buffer = new THREE.Mesh(
-            new THREE.SphereGeometry(10),
-            new THREE.MeshBasicMaterial({ color: 0x000000 })
-        );
-        buffer.position.set(0, -80, 190);
-
         this.towPoint = new THREE.Object3D();
         this.towPoint.position.set(0, -80, 190);
 
-        this.add(box, support, buffer, this.towPoint);
+        this.add(box, support, this.towPoint);
 
-        this.hitbox = new THREE.Box3(this);
-        this.hitboxHelper = new THREE.BoxHelper(this);
-        this.hitboxHelper.update();
+        this.hitbox = new THREE.Box3();
+        // TODO: Remove this in the end
+        this.hitboxHelper = new THREE.Box3Helper(this.hitbox, { color: 0xff0000 });
     }
 
+    /**
+    * @param connection point (THREE.Vector3 to which this' towPoint has to
+    *        move to
+    */
     plugInto(connection) {
-        // TODO: add annimations here
+        // TODO: add annimations here. connection is a THREE.Vector3 with the
+        // coordinates where the trailer's towPoint has to go to.
+
         if (connection.isVector3) {
             let diff = new THREE.Vector3()
+            // has to be as scuffed as this, yes...
             diff.add(connection);
             diff.sub(this.position);
             diff.sub(this.towPoint.position);
@@ -59,8 +59,8 @@ class Tow extends THREE.Object3D {
             this.translateY(diff.y);
             this.translateZ(diff.z);
         }
-        this.hitboxHelper.update();
-        this.hitbox.applyMatrix4(this.matrixWorld);
+
+        this.hitbox.setFromObject(this);
     }
 
     #generateBox() {
@@ -107,39 +107,47 @@ class Tow extends THREE.Object3D {
         return result;
     }
 
+    /**
+    * @param the hitbox to check collisions with while this moves
+    */
     watch(target) {
         this.#watchTarget = target;
     }
 
     checkCollision() {
+        this.hitbox.setFromObject(this);
         console.log(this.hitbox.intersectsBox(this.#watchTarget));
     }
 
+    /**
+    * moves trailer by 5 on the z-axis
+    */
     moveLeft() {
         this.translateZ(5);
-        this.hitboxHelper.update();
-        this.hitbox.applyMatrix4(this.matrixWorld);
         this.checkCollision();
     }
 
+    /**
+    * moves trailer by 5 on the x-axis
+    */
     moveDown() {
         this.translateX(5);
-        this.hitboxHelper.update();
-        this.hitbox.applyMatrix4(this.matrixWorld);
         this.checkCollision();
     }
 
+    /**
+    * moves trailer by -5 on the x-axis
+    */
     moveUp() {
         this.translateX(-5);
-        this.hitboxHelper.update();
-        this.hitbox.applyMatrix4(this.matrixWorld);
         this.checkCollision();
     }
 
+    /**
+    * moves trailer by -5 on the z-axis
+    */
     moveRight() {
         this.translateZ(-5);
-        this.hitboxHelper.update();
-        this.hitbox.applyMatrix4(this.matrixWorld);
         this.checkCollision();
     }
 }
