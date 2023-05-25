@@ -14,6 +14,7 @@ class Robot extends THREE.Object3D {
     #rightFoot;
     #leftArm;
     #rightArm;
+    #truck;
 
     hitboxHelper;
     hitbox;
@@ -42,6 +43,7 @@ class Robot extends THREE.Object3D {
         this.#rightArm.position.set(-95, -25, -35);
         this.#leftArm = new arm.Arm();
         this.#leftArm.position.set(95, -25, -35);
+        this.#truck = false;
 
         const buffer = new THREE.Mesh(
             new THREE.SphereGeometry(10),
@@ -76,25 +78,23 @@ class Robot extends THREE.Object3D {
         });
     }
 
+    // BUG: are this methods even worth it?
     getLeftArmPositionZ() {
-        this.#updateHeight();
         return this.#leftArm.position.z;
     }
 
     getLeftArmPositionX() {
-        this.#updateHeight();
         return this.#leftArm.position.x;
     }
 
     getRightArmPositionZ() {
-        this.#updateHeight();
         return this.#rightArm.position.z;
     }
 
     getRightArmPositionX() {
-        this.#updateHeight();
         return this.#rightArm.position.z;
     }
+    // !comment
 
     reset() {
         this.position.set(110, 370, 280);
@@ -135,7 +135,6 @@ class Robot extends THREE.Object3D {
             this.#rightFoot.rotateX(Math.PI / 64);
             this.#updateHeight();
         }
-        this.#updateHeight();
     }
 
     moveFeetDown() {
@@ -144,20 +143,18 @@ class Robot extends THREE.Object3D {
             this.#rightFoot.rotateX(-(Math.PI / 64));
             this.#updateHeight();
         }
-        this.#updateHeight();
     }
     rotateHeadUp() {
         if (this.#head.rotation.x < 0) {
             this.#head.rotateX(Math.PI / 64);
-
+            this.#updateHeight();
         }
-        this.#updateHeight();
     }
     rotateHeadDown() {
         if (this.#head.rotation.x > -Math.PI / 2) {
             this.#head.rotateX(-Math.PI / 64);
+            this.#updateHeight();
         }
-        this.#updateHeight();
     }
 
     rotateLegsUp() {
@@ -185,6 +182,21 @@ class Robot extends THREE.Object3D {
         const offset = Math.max(footOffset + legOffset + 110, 165);
         this.position.y = offset;
         this.hitbox.setFromObject(this);
+        this.#isTruck();
+    }
+
+    #isTruck() {
+        if (this.getLeftArmPositionZ() == -65 &&
+            this.getLeftArmPositionX() == 65 &&
+            this.#leftFoot.rotation.x > (Math.PI / 2) &&
+            this.#head.rotation.x < -Math.PI / 2 &&
+            this.#leftLeg.rotation.x > Math.PI / 2) {
+            this.#truck = true;
+            console.log("[INFO]: robot form: truck");
+        }
+        else {
+            this.#truck = false;
+        }
     }
 }
 
