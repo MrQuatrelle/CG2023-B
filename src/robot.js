@@ -45,19 +45,13 @@ class Robot extends THREE.Object3D {
         this.#leftArm.position.set(95, -25, -35);
         this.#truck = false;
 
-        const buffer = new THREE.Mesh(
-            new THREE.SphereGeometry(10),
-            new THREE.MeshBasicMaterial({ color: 0x000000 })
-        );
-        buffer.position.set(0, -110, -160);
-
         this.towPoint = new THREE.Object3D();
         this.towPoint.position.set(0, -110, -160);
 
         this.add(this.#body, this.#head,
             this.#leftLeg, this.#rightLeg,
             this.#leftArm, this.#rightArm,
-            this.towPoint, buffer);
+            this.towPoint);
 
         this.hitbox = new THREE.Box3();
         // TODO: Remove this in the end!
@@ -182,10 +176,10 @@ class Robot extends THREE.Object3D {
         const offset = Math.max(footOffset + legOffset + 110, 165);
         this.position.y = offset;
         this.hitbox.setFromObject(this);
-        this.#isTruck();
+        this.#updateStatus();
     }
 
-    #isTruck() {
+    #updateStatus() {
         if (this.getLeftArmPositionZ() == -65 &&
             this.getLeftArmPositionX() == 65 &&
             this.#leftFoot.rotation.x > (Math.PI / 2) &&
@@ -197,6 +191,14 @@ class Robot extends THREE.Object3D {
         else {
             this.#truck = false;
         }
+    }
+
+    /**
+    * returns if robot is in truck form or not.
+    * @type boolean
+    */
+    isTruck() {
+        return this.#truck;
     }
 }
 
