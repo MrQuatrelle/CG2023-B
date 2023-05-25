@@ -14,6 +14,7 @@ class Robot extends THREE.Object3D {
     #rightFoot;
     #leftArm;
     #rightArm;
+    #truck;
 
     hitboxHelper;
     hitbox;
@@ -42,6 +43,7 @@ class Robot extends THREE.Object3D {
         this.#rightArm.position.set(-95, -25, -35);
         this.#leftArm = new arm.Arm();
         this.#leftArm.position.set(95, -25, -35);
+        this.#truck = false;
 
         const buffer = new THREE.Mesh(
             new THREE.SphereGeometry(10),
@@ -108,6 +110,7 @@ class Robot extends THREE.Object3D {
             }
         }
         this.hitboxHelper.update();
+        this.checkTruck();
     }
 
     moveArmsOutwards() {
@@ -122,6 +125,7 @@ class Robot extends THREE.Object3D {
             }
         }
         this.hitboxHelper.update();
+        this.checkTruck();
     }
 
     moveFeetUp() {
@@ -130,6 +134,7 @@ class Robot extends THREE.Object3D {
             this.#rightFoot.rotateX(Math.PI / 64);
             this.#updateHeight();
         }
+        this.checkTruck();
     }
 
     moveFeetDown() {
@@ -138,17 +143,20 @@ class Robot extends THREE.Object3D {
             this.#rightFoot.rotateX(-(Math.PI / 64));
             this.#updateHeight();
         }
+        this.checkTruck();
     }
     rotateHeadUp() {
         if (this.#head.rotation.x < 0) {
             this.#head.rotateX(Math.PI / 64);
 
         }
+        this.checkTruck();
     }
     rotateHeadDown() {
         if (this.#head.rotation.x > -Math.PI / 2) {
             this.#head.rotateX(-Math.PI / 64);
         }
+        this.checkTruck();
     }
 
     rotateLegsUp() {
@@ -157,6 +165,7 @@ class Robot extends THREE.Object3D {
             this.#rightLeg.rotateX(Math.PI / 64);
             this.#updateHeight();
         }
+        this.checkTruck();
     }
 
     rotateLegsDown() {
@@ -165,6 +174,7 @@ class Robot extends THREE.Object3D {
             this.#rightLeg.rotateX(-Math.PI / 64);
             this.#updateHeight();
         }
+        this.checkTruck();
     }
 
     #updateHeight() {
@@ -177,6 +187,23 @@ class Robot extends THREE.Object3D {
         this.position.y = offset;
         this.hitboxHelper.update();
         this.hitbox.applyMatrix4(this.matrixWorld);
+    }
+
+    checkTruck(){
+        if (this.getLeftArmPositionZ() == -65 &&
+            this.getLeftArmPositionX() == 65 &&
+            this.#leftFoot.rotation.x > (Math.PI / 2) &&
+            this.#head.rotation.x < -Math.PI / 2 &&
+            this.#leftLeg.rotation.x > Math.PI / 2){
+                this.#truck = true;
+                console.log("[INFO]: truck");
+            }
+        else{ 
+            this.#truck = false;
+            console.log("[INFO]: robot");
+        }
+
+        
     }
 }
 
