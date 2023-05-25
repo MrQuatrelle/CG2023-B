@@ -202,6 +202,21 @@ class Robot extends THREE.Object3D {
     }
 }
 
+
+
+
+
+
+
+
+abstract class doArmMovement {
+}
+
+
+
+
+
+
 export default {
     Robot: Robot
 }
