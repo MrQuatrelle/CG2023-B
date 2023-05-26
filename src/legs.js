@@ -36,17 +36,17 @@ class Leg extends THREE.Object3D {
                 color: 0x000769
             })
         );
-        const legEdges = new THREE.LineSegments(
-            new THREE.EdgesGeometry(legGeom),
-            new THREE.LineBasicMaterial({
-                color: 0x000000,
-                linewidth: 2,
-            })
-        );
+        // const legEdges = new THREE.LineSegments(
+        //     new THREE.EdgesGeometry(legGeom),
+        //     new THREE.LineBasicMaterial({
+        //         color: 0x000000,
+        //         linewidth: 2,
+        //     })
+        // );
 
         const leg = new THREE.Object3D();
         leg.add(legMesh);
-        leg.add(legEdges);
+        // leg.add(legEdges);
 
         return leg;
     }
@@ -60,17 +60,17 @@ class Leg extends THREE.Object3D {
             })
         );
 
-        const thyEdges = new THREE.LineSegments(
-            new THREE.EdgesGeometry(thyGeom),
-            new THREE.LineBasicMaterial({
-                color: 0x000000,
-                linewidth: 2,
-            })
-        );
+        // const thyEdges = new THREE.LineSegments(
+        //     new THREE.EdgesGeometry(thyGeom),
+        //     new THREE.LineBasicMaterial({
+        //         color: 0x000000,
+        //         linewidth: 2,
+        //     })
+        // );
 
         const thy = new THREE.Object3D();
         thy.add(thyMesh);
-        thy.add(thyEdges);
+        // thy.add(thyEdges);
 
         return thy;
     }

@@ -17,6 +17,7 @@ class Head extends THREE.Object3D {
 
         this.add(chin);
     }
+
     #generateAntenna(headLinesMat){
         const antennaSolidMat = new THREE.MeshBasicMaterial( { color: 0x000769});
         const antenna = new THREE.Object3D();
@@ -29,13 +30,28 @@ class Head extends THREE.Object3D {
         return antenna;
     }
     #generateHead(headLinesMat){
+        //Noggin
         const headSolidMat = new THREE.MeshBasicMaterial( { color: 0x000769});
         const head = new THREE.Object3D();
         const headSolidGeo = new THREE.BoxGeometry(40, 40, 40);
         const headSolid = new THREE.Mesh(headSolidGeo,headSolidMat);
-        const headEdges = new THREE.LineSegments(headSolidGeo, headLinesMat);
-        head.add(headSolid);
-        head.add(headEdges);
+        
+        //Eyes
+        const eyeGeo = new THREE.CircleGeometry(5); 
+        const eyeMat = new THREE.MeshBasicMaterial( { color: 0xEEEEEE } ); 
+        const eye1 = new THREE.Mesh( eyeGeo, eyeMat );
+        const eye2 = new THREE.Mesh( eyeGeo, eyeMat );
+        eye1.position.set(10, 5, 20.2)
+        eye2.position.set(-10, 5, 20.2)
+        //Face
+
+        const faceGeo = new THREE.PlaneGeometry( 30, 20);
+        const faceMat = new THREE.MeshBasicMaterial( {color: 0xAAAAAA});
+        const face = new THREE.Mesh(faceGeo, faceMat);
+        face.position.set(0, -5, 20.1);
+
+        head.add(headSolid, face, eye1, eye2);
+
         return head;
     }
 }

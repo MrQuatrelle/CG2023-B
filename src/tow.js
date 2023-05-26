@@ -83,16 +83,16 @@ class Tow extends THREE.Object3D {
                 color: 0xaaaaaa
             })
         );
-        const edges = new THREE.LineSegments(
-            new THREE.EdgesGeometry(geom),
-            new THREE.LineBasicMaterial({
-                color: 0x000000,
-                linewidth: 2,
-            })
-        );
+        // const edges = new THREE.LineSegments(
+        //     new THREE.EdgesGeometry(geom),
+        //     new THREE.LineBasicMaterial({
+        //         color: 0x000000,
+        //         linewidth: 2,
+        //     })
+        // );
 
         const result = new THREE.Object3D();
-        result.add(mesh, edges);
+        result.add(mesh);
 
         return result;
     }
@@ -105,16 +105,16 @@ class Tow extends THREE.Object3D {
                 color: 0x000769
             })
         );
-        const edges = new THREE.LineSegments(
-            new THREE.EdgesGeometry(geom),
-            new THREE.LineBasicMaterial({
-                color: 0x000000,
-                linewidth: 2,
-            })
-        );
+        // const edges = new THREE.LineSegments(
+        //     new THREE.EdgesGeometry(geom),
+        //     new THREE.LineBasicMaterial({
+        //         color: 0x000000,
+        //         linewidth: 2,
+        //     })
+        // );
 
         const result = new THREE.Object3D();
-        result.add(mesh, edges);
+        result.add(mesh);
 
         return result;
     }
