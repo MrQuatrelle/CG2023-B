@@ -280,7 +280,7 @@ class moveToTruckState {
         let deltaY;
         let deltaZ;
 
-        if (deltaS.length() < 5) {
+        if (deltaS.length() < 1) {
             deltaX = deltaS.x;
             deltaY = deltaS.y;
             deltaZ = deltaS.z;

@@ -3,36 +3,36 @@ import * as THREE from "three";
 const front = new THREE.OrthographicCamera(
     - window.innerWidth / 2,
     window.innerWidth / 2,
-    window.innerHeight / 2 + 100,
-    - window.innerHeight / 2 - 100,
+    window.innerHeight / 2,
+    - window.innerHeight / 2,
 );
 
 const lateral = new THREE.OrthographicCamera(
     - window.innerWidth / 2,
     window.innerWidth / 2,
-    window.innerHeight / 2 + 100,
-    - window.innerHeight / 2 - 100,
+    window.innerHeight / 2,
+    - window.innerHeight / 2,
 );
 
 const top = new THREE.OrthographicCamera(
     - window.innerWidth / 2,
     window.innerWidth / 2,
-    window.innerHeight / 2 + 100,
-    - window.innerHeight / 2 - 100,
+    window.innerHeight / 2,
+    - window.innerHeight / 2,
 );
 
 const isoOrthographic = new THREE.OrthographicCamera(
     - window.innerWidth / 2,
     window.innerWidth / 2,
-    window.innerHeight / 2 + 100,
-    - window.innerHeight / 2 - 100,
+    window.innerHeight / 2,
+    - window.innerHeight / 2,
 );
 
 const isoPerspective = new THREE.PerspectiveCamera(
     75,
     window.innerWidth / window.innerHeight,
     1,
-    1000
+    3000
 );
 
 var target;
@@ -64,8 +64,8 @@ function update() {
 front.position.set(1000, 240, 110);
 lateral.position.set(95, 240, 1000);
 top.position.set(95, 1000, 110);
-isoOrthographic.position.set(500, 500, 500);
-isoPerspective.position.set(500, 500, 500);
+isoOrthographic.position.set(600, 600, 600);
+isoPerspective.position.set(600, 600, 600);
 
 export default {
     setTarget: setTarget,

@@ -140,6 +140,21 @@ window.addEventListener("keydown", (e) => {
             trailer.moveRight();
             break;
 
+        case 'j':
+            trailer.moveLeft();
+            break;
+
+        case 'k':
+            trailer.moveDown();
+            break;
+
+        case 'l':
+            trailer.moveUp();
+            break;
+
+        case 'ç':
+            trailer.moveRight();
+            break;
         // for debugging purposes
         default:
             break;
@@ -198,6 +213,22 @@ window.addEventListener("keyup", (e) => {
             break;
 
         case 'ArrowRight':
+            trailer.stopRight();
+            break;
+
+        case 'j':
+            trailer.stopLeft();
+            break;
+
+        case 'k':
+            trailer.stopDown();
+            break;
+
+        case 'l':
+            trailer.stopUp();
+            break;
+
+        case 'ç':
             trailer.stopRight();
             break;
     }
