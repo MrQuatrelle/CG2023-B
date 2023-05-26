@@ -14,7 +14,8 @@ function animate() {
     // function
     requestAnimationFrame(animate);
     renderer.render(scene, camera);
-    beepboop.update();
+    beepboop.move();
+    trailer.move();
 }
 
 function main() {
@@ -80,43 +81,51 @@ window.addEventListener("keydown", (e) => {
             break;
 
         case 'q':
-            console.log("[INFO]: moving feet down");
             beepboop.moveFeetUp();
             break;
 
         case 'a':
-            console.log("[INFO]: moving feet down");
             beepboop.moveFeetDown();
             break;
 
         case 'w':
-            console.log("[INFO]: moving feet down");
             beepboop.moveLegsUp();
             break;
 
         case 's':
-            console.log("[INFO]: moving feet down");
             beepboop.moveLegsDown();
             break;
 
         case 'e':
-            console.log("[INFO]: moving feet down");
             beepboop.moveArmsInwards();
             break;
 
         case 'd':
-            console.log("[INFO]: moving feet down");
             beepboop.moveArmsOutwards();
             break;
 
         case 'r':
-            console.log("[INFO]: moving feet down");
             beepboop.moveHeadDown();
             break;
 
         case 'f':
-            console.log("[INFO]: moving feet down");
             beepboop.moveHeadUp();
+            break;
+
+        case 'ArrowLeft':
+            trailer.moveLeft();
+            break;
+
+        case 'ArrowDown':
+            trailer.moveDown();
+            break;
+
+        case 'ArrowUp':
+            trailer.moveUp();
+            break;
+
+        case 'ArrowRight':
+            trailer.moveRight();
             break;
 
         // for debugging purposes
@@ -127,26 +136,6 @@ window.addEventListener("keydown", (e) => {
     if (keysPressed['6']) {
         console.log("[INFO]: toggling wireframe");
         beepboop.toggleWireframe();
-    }
-
-    if (keysPressed['ArrowDown']) {
-        console.log("[INFO]: moving tow +x");
-        trailer.moveDown();
-    }
-
-    if (keysPressed['ArrowUp']) {
-        console.log("[INFO]: moving tow -x");
-        trailer.moveUp();
-    }
-
-    if (keysPressed['ArrowLeft']) {
-        console.log("[INFO]: moving tow +z");
-        trailer.moveLeft();
-    }
-
-    if (keysPressed['ArrowRight']) {
-        console.log("[INFO]: moving tow -z");
-        trailer.moveRight();
     }
 });
 
@@ -160,14 +149,6 @@ window.addEventListener("keyup", (e) => {
             beepboop.stopFeet();
             break;
 
-        case 'r':
-            beepboop.stopHead();
-            break;
-
-        case 'f':
-            beepboop.stopHead();
-            break;
-
         case 'w':
             beepboop.stopLegs();
             break;
@@ -182,6 +163,30 @@ window.addEventListener("keyup", (e) => {
 
         case 'd':
             beepboop.stopArms();
+            break;
+
+        case 'r':
+            beepboop.stopHead();
+            break;
+
+        case 'f':
+            beepboop.stopHead();
+            break;
+
+        case 'ArrowLeft':
+            trailer.stopLeft();
+            break;
+
+        case 'ArrowDown':
+            trailer.stopDown();
+            break;
+
+        case 'ArrowUp':
+            trailer.stopUp();
+            break;
+
+        case 'ArrowRight':
+            trailer.stopRight();
             break;
     }
     delete keysPressed[e.key];

@@ -9,19 +9,21 @@ class Robot extends THREE.Object3D {
     #body;
 
     #head;
-    #headState;
 
     #leftLeg;
     #rightLeg;
-    #legState;
 
     #leftFoot;
     #rightFoot;
-    #feetState;
 
     #leftArm;
     #rightArm;
+
+    #headState;
+    #legState;
+    #feetState;
     #armsState;
+    #moving;
 
     #truck;
 
@@ -33,7 +35,6 @@ class Robot extends THREE.Object3D {
         super();
         this.#head = new head.Head();
         this.#head.position.set(0, 40, 60);
-        this.#headState = new headStillState();
 
         this.#body = new body.Body();
 
@@ -43,19 +44,22 @@ class Robot extends THREE.Object3D {
         this.#rightLeg = new legs.Leg();
         this.#rightLeg.isRight();
         this.#rightLeg.position.set(-30, -110, 0);
-        this.#legState = new legsStillState();
 
         this.#leftFoot = this.#leftLeg.getFoot();
         this.#leftFoot.translateX(10);
         this.#rightFoot = this.#rightLeg.getFoot();
         this.#rightFoot.translateX(-10);
-        this.#feetState = new feetStillState();
 
         this.#rightArm = new arm.Arm();
         this.#rightArm.position.set(-95, -25, -35);
         this.#leftArm = new arm.Arm();
         this.#leftArm.position.set(95, -25, -35);
-        this.#armsState = new armsStillState();
+
+        this.#headState = new stillState();
+        this.#legState = new stillState();
+        this.#feetState = new stillState();
+        this.#armsState = new stillState();
+        this.#moving = 0;
 
         this.#truck = false;
 
@@ -73,93 +77,106 @@ class Robot extends THREE.Object3D {
         this.reset();
     }
 
-    update() {
-        this.#moveFeet();
-        this.#moveLegs();
-        this.#moveHead();
-        this.#moveArms();
+    move() {
+        this.#feetState.move(this);
+        this.#legState.move(this);
+        this.#headState.move(this);
+        this.#armsState.move(this);
 
-        this.#updateHeight();
+        if (this.#moving)
+            this.#updateHeight();
     }
 
     moveFeetDown() {
-        if (this.#feetState.isMoving == false) {
+        if (!this.#feetState.isMoving) {
+            console.log("[INFO]: moving feet down");
             this.#feetState = new feetDownState();
+            this.#moving++;
         }
     }
 
     moveFeetUp() {
-        if (this.#feetState.isMoving == false) {
+        if (!this.#feetState.isMoving) {
+            console.log("[INFO]: moving feet up");
             this.#feetState = new feetUpState();
+            this.#moving++;
         }
     }
 
     stopFeet() {
-        this.#feetState = new feetStillState();
-    }
-
-    #moveFeet() {
-        this.#feetState.move(this);
+        if (this.#feetState.isMoving) {
+            this.#feetState = new stillState();
+            this.#moving--;
+        }
     }
 
     moveLegsDown() {
-        if (this.#legState.isMoving == false) {
+        if (!this.#legState.isMoving) {
+            console.log("[INFO]: moving legs down");
             this.#legState = new legsDownState();
+            this.#moving++;
         }
     }
 
     moveLegsUp() {
-        if (this.#legState.isMoving == false) {
+        if (!this.#legState.isMoving) {
+            console.log("[INFO]: moving legs up");
             this.#legState = new legsUpState();
+            this.#moving++;
         }
     }
 
     stopLegs() {
-        this.#legState = new legsStillState();
-    }
-
-    #moveLegs() {
-        this.#legState.move(this);
+        if (this.#legState.isMoving) {
+            this.#legState = new stillState();
+            this.#moving--;
+        }
     }
 
     moveHeadDown() {
-        if (this.#headState.isMoving == false) {
+        if (!this.#headState.isMoving) {
+            console.log("[INFO]: moving head down");
             this.#headState = new headDownState();
+            this.#moving++;
         }
     }
 
     moveHeadUp() {
-        if (this.#headState.isMoving == false) {
+        if (!this.#headState.isMoving) {
+            console.log("[INFO]: moving head up");
             this.#headState = new headUpState();
+            this.#moving++;
         }
     }
 
     stopHead() {
-        this.#headState = new headStillState();
-    }
-
-    #moveHead() {
-        this.#headState.move(this);
+        if (this.#headState.isMoving) {
+            this.#headState = new stillState();
+            this.#moving--;
+        }
     }
 
     moveArmsInwards() {
-        if (this.#armsState.isMoving == false) {
+        if (!this.#armsState.isMoving) {
+            console.log("[INFO]: moving arms inwards");
             this.#armsState = new armsInwardsState();
+            this.#moving++;
         }
     }
 
     moveArmsOutwards() {
-        if (this.#armsState.isMoving == false) {
+        if (!this.#armsState.isMoving) {
+            console.log("[INFO]: moving arms outwards");
             this.#armsState = new armsOutwardsState();
+            this.#moving++;
         }
     }
 
     stopArms() {
-        this.#armsState = new armsStillState();
-    }
-
-    #moveArms() {
-        this.#armsState.move(this);
+        if (this.#armsState.isMoving) {
+            this.#armsState = new stillState();
+            this.#moving--;
+        }
     }
 
     /**
@@ -260,11 +277,7 @@ class Robot extends THREE.Object3D {
     }
 }
 
-// Arms classes for State Design Pattern
-
-class armsStillState {
-    isMoving = false;
-
+class stillState {
     constructor() { }
 
     move(robot) {
@@ -272,12 +285,11 @@ class armsStillState {
     }
 }
 
-class armsOutwardsState extends armsStillState {
+class armsOutwardsState {
     isMoving = true;
     #clock;
 
     constructor() {
-        super();
         this.#clock = new THREE.Clock();
         this.#clock.start();
     }
@@ -298,12 +310,11 @@ class armsOutwardsState extends armsStillState {
     }
 }
 
-class armsInwardsState extends armsStillState {
+class armsInwardsState {
     isMoving = true;
     #clock;
 
     constructor() {
-        super();
         this.#clock = new THREE.Clock();
         this.#clock.start();
     }
@@ -324,24 +335,11 @@ class armsInwardsState extends armsStillState {
     }
 }
 
-// Legs classes for State Design Pattern
-
-class legsStillState {
-    isMoving = false;
-
-    constructor() { }
-
-    move(robot) {
-        // do nothing
-    }
-}
-
-class legsDownState extends legsStillState {
+class legsDownState {
     isMoving = true;
     #clock;
 
     constructor() {
-        super();
         this.#clock = new THREE.Clock();
         this.#clock.start();
     }
@@ -355,12 +353,11 @@ class legsDownState extends legsStillState {
     }
 }
 
-class legsUpState extends legsStillState {
+class legsUpState {
     isMoving = true;
     #clock;
 
     constructor() {
-        super();
         this.#clock = new THREE.Clock();
         this.#clock.start();
     }
@@ -373,24 +370,12 @@ class legsUpState extends legsStillState {
         robot.getRightLeg().rotateX(delta);
     }
 }
-// Feet classes for State Design Pattern
 
-class feetStillState {
-    isMoving = false;
-
-    constructor() { }
-
-    move(robot) {
-        // do nothing
-    }
-}
-
-class feetUpState extends feetStillState {
+class feetUpState {
     isMoving = true;
     #clock;
 
     constructor() {
-        super();
         this.#clock = new THREE.Clock();
         this.#clock.start();
     }
@@ -404,12 +389,11 @@ class feetUpState extends feetStillState {
     }
 }
 
-class feetDownState extends feetStillState {
+class feetDownState {
     isMoving = true;
     #clock;
 
     constructor() {
-        super();
         this.#clock = new THREE.Clock();
         this.#clock.start();
     }
@@ -425,22 +409,11 @@ class feetDownState extends feetStillState {
 
 // Head classes for State Design Pattern
 
-class headStillState {
-    isMoving = false;
-
-    constructor() { }
-
-    move(robot) {
-        // do nothing
-    }
-}
-
-class headUpState extends headStillState {
+class headUpState {
     isMoving = true;
     #clock;
 
     constructor() {
-        super();
         this.#clock = new THREE.Clock();
         this.#clock.start();
     }
@@ -453,12 +426,11 @@ class headUpState extends headStillState {
     }
 }
 
-class headDownState extends headStillState {
+class headDownState {
     isMoving = true;
     #clock;
 
     constructor() {
-        super();
         this.#clock = new THREE.Clock();
         this.#clock.start();
     }

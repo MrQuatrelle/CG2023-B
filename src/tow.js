@@ -8,6 +8,12 @@ class Tow extends THREE.Object3D {
     hitboxHelper;
     #watchTarget;
 
+    #leftState;
+    #downState;
+    #rightState;
+    #upState;
+    #moving;
+
     constructor() {
         super();
 
@@ -38,6 +44,12 @@ class Tow extends THREE.Object3D {
         this.hitbox = new THREE.Box3();
         // TODO: Remove this in the end
         this.hitboxHelper = new THREE.Box3Helper(this.hitbox, { color: 0xff0000 });
+
+        this.#leftState = new stillState();
+        this.#downState = new stillState();
+        this.#upState = new stillState();
+        this.#rightState = new stillState();
+        this.#moving = 0;
     }
 
     /**
@@ -119,39 +131,144 @@ class Tow extends THREE.Object3D {
         console.log(this.hitbox.intersectsBox(this.#watchTarget));
     }
 
-    /**
-    * moves trailer by 5 on the z-axis
-    */
+    move() {
+        this.#leftState.move(this);
+        this.#downState.move(this);
+        this.#upState.move(this);
+        this.#rightState.move(this);
+
+        if (this.#moving)
+            this.checkCollision();
+    }
+
     moveLeft() {
-        this.translateZ(5);
-        this.checkCollision();
+        if (!this.#leftState.isMoving) {
+            this.#leftState = new moveLeftState();
+            this.#moving++;
+        }
     }
 
-    /**
-    * moves trailer by 5 on the x-axis
-    */
+    stopLeft() {
+        if (this.#leftState.isMoving) {
+            this.#leftState = new stillState();
+            this.#moving--;
+        }
+    }
+
     moveDown() {
-        this.translateX(5);
-        this.checkCollision();
+        if (!this.#downState.isMoving) {
+            this.#downState = new moveDownState();
+            this.#moving++;
+        }
     }
 
-    /**
-    * moves trailer by -5 on the x-axis
-    */
+    stopDown() {
+        if (this.#downState.isMoving) {
+            this.#downState = new stillState();
+            this.#moving--;
+        }
+    }
+
     moveUp() {
-        this.translateX(-5);
-        this.checkCollision();
+        if (!this.#upState.isMoving) {
+            this.#upState = new moveUpState();
+            this.#moving++;
+        }
     }
 
-    /**
-    * moves trailer by -5 on the z-axis
-    */
+    stopUp() {
+        if (this.#upState.isMoving) {
+            this.#upState = new stillState();
+            this.#moving--;
+        }
+    }
+
     moveRight() {
-        this.translateZ(-5);
-        this.checkCollision();
+        if (!this.#rightState.isMoving) {
+            this.#rightState = new moveRightState();
+            this.#moving++;
+        }
+    }
+
+    stopRight() {
+        if (this.#rightState.isMoving) {
+            this.#rightState = new stillState();
+            this.#moving--;
+        }
     }
 }
 
+class moveRightState {
+    #clock;
+    isMoving = true;
+
+    constructor() {
+        this.#clock = new THREE.Clock();
+        this.#clock.start();
+    }
+
+    move(trailer) {
+        let delta = this.#clock.getDelta();
+        delta *= 60;
+        trailer.translateZ(-delta);
+    }
+}
+
+class moveLeftState {
+    #clock;
+    isMoving = true;
+
+    constructor() {
+        this.#clock = new THREE.Clock();
+        this.#clock.start();
+    }
+
+    move(trailer) {
+        let delta = this.#clock.getDelta();
+        delta *= 60;
+        trailer.translateZ(delta);
+    }
+}
+
+class moveUpState {
+    #clock;
+    isMoving = true;
+
+    constructor() {
+        this.#clock = new THREE.Clock();
+        this.#clock.start();
+    }
+
+    move(trailer) {
+        let delta = this.#clock.getDelta();
+        delta *= 60;
+        trailer.translateX(-delta);
+    }
+}
+
+class moveDownState {
+    #clock;
+    isMoving = true;
+
+    constructor() {
+        this.#clock = new THREE.Clock();
+        this.#clock.start();
+    }
+
+    move(trailer) {
+        let delta = this.#clock.getDelta();
+        delta *= 60;
+        trailer.translateX(delta);
+    }
+}
+
+class stillState {
+    constructor() { }
+
+    move(trailer) {
+        // do nothing
+    }
+}
 
 export default {
     Tow: Tow,
