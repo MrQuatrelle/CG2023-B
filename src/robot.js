@@ -363,7 +363,7 @@ class legsDownState {
     }
 
     move(robot) {
-        if (robot.getLeftFoot().rotation.x < Math.PI / 60) {
+        if (robot.getLeftLeg().rotation.x < Math.PI / 60) {
             robot.getLeftLeg().rotation.x = 0;
             robot.getRightLeg().rotation.x = 0;
             return;
@@ -387,7 +387,7 @@ class legsUpState {
     }
 
     move(robot) {
-        if ((Math.PI / 2) - robot.getLeftFoot().rotation.x < Math.PI / 60) {
+        if ((Math.PI / 2) - robot.getLeftLeg().rotation.x < Math.PI / 60) {
             robot.getLeftLeg().rotation.x = Math.PI / 2;
             robot.getRightLeg().rotation.x = Math.PI / 2;
             return;
