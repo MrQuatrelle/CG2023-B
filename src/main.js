@@ -155,6 +155,26 @@ window.addEventListener("keyup", (e) => {
         case 'a':
             beepboop.stopFeet();
             break;
+
+        case 'q':
+            beepboop.stopFeet();
+            break;
+
+        case 'r':
+            beepboop.stopHead();
+            break;
+
+        case 'f':
+            beepboop.stopHead();
+            break;
+
+        case 'w':
+            beepboop.stopLegs();
+            break;
+
+        case 's':
+            beepboop.stopLegs();
+            break;
     }
     delete keysPressed[e.key];
 });
