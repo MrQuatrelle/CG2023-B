@@ -9,7 +9,7 @@ class Foot extends THREE.Object3D {
         const footMesh = new THREE.Mesh(
             footGeom,
             new THREE.MeshBasicMaterial({
-                color: 0xff0000
+                color: 0x000769
             })
         );
         const footEdges = new THREE.LineSegments(

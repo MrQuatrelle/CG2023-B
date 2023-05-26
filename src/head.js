@@ -18,18 +18,18 @@ class Head extends THREE.Object3D {
         this.add(chin);
     }
     #generateAntenna(headLinesMat){
-        const antennaSolidMat = new THREE.MeshBasicMaterial( { color: 0x000070});
+        const antennaSolidMat = new THREE.MeshBasicMaterial( { color: 0x000769});
         const antenna = new THREE.Object3D();
         const antennaSolidGeo= new THREE.ConeGeometry(5, 20, 100);
         const antennaSolid = new THREE.Mesh(antennaSolidGeo,antennaSolidMat);
-        const antennaEdges = new THREE.LineSegments(antennaSolidGeo, headLinesMat);
+        //const antennaEdges = new THREE.LineSegments(antennaSolidGeo, headLinesMat);
 
         antenna.add(antennaSolid);
-        antenna.add(antennaEdges);
+        //antenna.add(antennaEdges);
         return antenna;
     }
     #generateHead(headLinesMat){
-        const headSolidMat = new THREE.MeshBasicMaterial( { color: 0x000070});
+        const headSolidMat = new THREE.MeshBasicMaterial( { color: 0x000769});
         const head = new THREE.Object3D();
         const headSolidGeo = new THREE.BoxGeometry(40, 40, 40);
         const headSolid = new THREE.Mesh(headSolidGeo,headSolidMat);

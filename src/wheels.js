@@ -8,13 +8,13 @@ class Wheel extends THREE.Object3D {
         const wheelMesh = new THREE.Mesh(
             wheelGeom,
             new THREE.MeshBasicMaterial({
-                color: 0xff0000
+                color: 0x000000
             })
         );
         const wheelEdges = new THREE.LineSegments(
             new THREE.EdgesGeometry(wheelGeom),
             new THREE.LineBasicMaterial({
-                color: 0x000000,
+                color: 0xffffff,
                 linewidth: 2,
             })
         );

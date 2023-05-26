@@ -82,7 +82,7 @@ class Tow extends THREE.Object3D {
         const mesh = new THREE.Mesh(
             geom,
             new THREE.MeshBasicMaterial({
-                color: 0xff0000
+                color: 0xaaaaaa
             })
         );
         const edges = new THREE.LineSegments(
@@ -104,7 +104,7 @@ class Tow extends THREE.Object3D {
         const mesh = new THREE.Mesh(
             geom,
             new THREE.MeshBasicMaterial({
-                color: 0x00ff00
+                color: 0x000769
             })
         );
         const edges = new THREE.LineSegments(

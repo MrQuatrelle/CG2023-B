@@ -33,7 +33,7 @@ class Leg extends THREE.Object3D {
         const legMesh = new THREE.Mesh(
             legGeom,
             new THREE.MeshBasicMaterial({
-                color: 0xff0000
+                color: 0x000769
             })
         );
         const legEdges = new THREE.LineSegments(

@@ -26,13 +26,13 @@ class Body extends THREE.Object3D {
         //Front part of chest
         const chestMeshGeo1 = new THREE.BoxGeometry(160, 80, 130);
         const chestMesh1 = new THREE.Mesh(chestMeshGeo1,
-            new THREE.MeshBasicMaterial({ color: 0x10ff10 }));
+            new THREE.MeshBasicMaterial({ color: 0x920000 }));
         chestMesh1.position.set(0, 0, 15)
 
         //Back part of chest
         const chestMeshGeo2 = new THREE.BoxGeometry(100, 80, 30);
         const chestMesh2 = new THREE.Mesh(chestMeshGeo2,
-            new THREE.MeshBasicMaterial({ color: 0x10ff10 }));
+            new THREE.MeshBasicMaterial({ color: 0x920000 }));
         chestMesh2.position.set(0, 0, -65)
 
         const chest = new THREE.Object3D();
@@ -44,18 +44,18 @@ class Body extends THREE.Object3D {
     #generateBelly() {
         const bellyGeo = new THREE.BoxGeometry(160, 50, 130);
         const bellySolid1 = new THREE.Mesh(bellyGeo,
-            new THREE.MeshBasicMaterial({ color: 0x00aa00 }));
+            new THREE.MeshBasicMaterial({ color: 0xaaaaaa }));
         bellySolid1.position.set(0, 0, 15)
 
         const bellyGeo2 = new THREE.BoxGeometry(100, 50, 30);
         const bellySolid2 = new THREE.Mesh(bellyGeo2,
-            new THREE.MeshBasicMaterial({ color: 0x00aa00 }));
+            new THREE.MeshBasicMaterial({ color: 0xaaaaaa }));
         bellySolid2.position.set(0, 0, -65);
 
         //Under part of belly
         const bellyGeo3 = new THREE.BoxGeometry(100, 30, 160);
         const bellySolid3 = new THREE.Mesh(bellyGeo3,
-            new THREE.MeshBasicMaterial({ color: 0x00aa00 }));
+            new THREE.MeshBasicMaterial({ color: 0xaaaaaa }));
         bellySolid3.position.set(0, -40, 0);
 
         const belly = new THREE.Object3D();
