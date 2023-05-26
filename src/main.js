@@ -19,7 +19,7 @@ function main() {
     scene.add(new THREE.AxesHelper(600));
 
     cameraControl.setTarget(new THREE.Vector3(95, 240, 110));
-    camera = cameraControl.camera1;
+    camera = cameraControl.camera5;
 
     beepboop = new robot.Robot();
     trailer = new tow.Tow();
