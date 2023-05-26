@@ -9,14 +9,7 @@ const renderer = new THREE.WebGLRenderer();
 var beepboop, trailer;
 var camera;
 
-function animate() {
-    // tldr, everytime the program has time to render a frame, it'll call this
-    // function
-    requestAnimationFrame(animate);
-    renderer.render(scene, camera);
-    beepboop.move();
-    trailer.move();
-}
+main();
 
 function main() {
     // initializations
@@ -35,14 +28,33 @@ function main() {
     trailer.position.set(110, 135, -280);
     trailer.hitbox.setFromObject(trailer);
     //
-    trailer.watch(beepboop.hitbox);
 
     scene.add(beepboop, beepboop.hitboxHelper, trailer, trailer.hitboxHelper);
 
     animate();
 }
 
-main();
+function animate() {
+    // tldr, everytime the program has time to render a frame, it'll call this
+    // function
+    requestAnimationFrame(animate);
+    renderer.render(scene, camera);
+    beepboop.move();
+    trailer.move();
+    checkCollisions();
+}
+
+function checkCollisions() {
+    console.log(beepboop.hitbox.intersectsBox(trailer.hitbox),
+        beepboop.isTruck(), !trailer.isTowed());
+    if (beepboop.hitbox.intersectsBox(trailer.hitbox) &&
+        beepboop.isTruck() && !trailer.isTowed()) {
+        trailer.plugInto(new THREE.Vector3()
+            .add(beepboop.towPoint.position)
+            .add(beepboop.position)
+        );
+    }
+}
 
 window.addEventListener("resize", () => {
     renderer.setSize(window.innerWidth, window.innerHeight);

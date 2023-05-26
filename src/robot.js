@@ -255,11 +255,11 @@ class Robot extends THREE.Object3D {
     }
 
     #updateStatus() {
-        if (this.getLeftArmPositionZ() == -65 &&
-            this.getLeftArmPositionX() == 65 &&
-            this.#leftFoot.rotation.x > (Math.PI / 2) &&
-            this.#head.rotation.x < -Math.PI / 2 &&
-            this.#leftLeg.rotation.x > Math.PI / 2) {
+        if (this.getLeftArmPositionZ() === -65,
+            this.getLeftArmPositionX() === 65,
+            this.#leftFoot.rotation.x === (Math.PI / 2),
+            this.#head.rotation.x === -Math.PI / 2,
+            this.#leftLeg.rotation.x === Math.PI / 2) {
             this.#truck = true;
             console.log("[INFO]: robot form: truck");
         }
@@ -298,12 +298,20 @@ class armsOutwardsState {
         let delta = this.#clock.getDelta();
         delta *= 30 * 2;
         if (robot.getLeftArmPositionX() < 95) {
-            delta = Math.min(delta, 95 - robot.getLeftArmPositionX());
+            if (robot.getLeftArmPositionX() > 94) {
+                robot.getLeftArm().position.x = 95;
+                robot.getRightArm().position.x = -95;
+                return;
+            }
             robot.getLeftArm().translateX(delta);
             robot.getRightArm().translateX(-delta);
         }
         else if (robot.getLeftArmPositionZ() < -35) {
-            delta = Math.min(delta, -(robot.getLeftArmPositionZ() + 35));
+            if (robot.getLeftArmPositionZ() > -36) {
+                robot.getLeftArm().position.z = -35;
+                robot.getRightArm().position.z = -35;
+                return;
+            }
             robot.getLeftArm().translateZ(delta);
             robot.getRightArm().translateZ(delta);
         }
@@ -323,15 +331,25 @@ class armsInwardsState {
         let delta = this.#clock.getDelta();
         delta *= 30 * 2;
         if (robot.getLeftArmPositionZ() > -65) {
-            delta = Math.min(delta, robot.getLeftArmPositionZ() + 65);
+            if (robot.getLeftArmPositionZ() < -64) {
+                robot.getLeftArm().position.z = -65;
+                robot.getRightArm().position.z = -65;
+                return;
+            }
             robot.getLeftArm().translateZ(-delta);
             robot.getRightArm().translateZ(-delta);
         }
         else if (robot.getLeftArmPositionX() > 65) {
-            delta = Math.min(delta, robot.getLeftArmPositionX() - 65);
+            if (robot.getLeftArmPositionX() < 66) {
+                robot.getLeftArm().position.x = 65;
+                robot.getRightArm().position.x = -65;
+                return;
+            }
             robot.getLeftArm().translateX(-delta);
             robot.getRightArm().translateX(delta);
         }
+
+        if (delta == 0) console.log("head done");
     }
 }
 
@@ -345,9 +363,15 @@ class legsDownState {
     }
 
     move(robot) {
+        if (robot.getLeftFoot().rotation.x < Math.PI / 60) {
+            robot.getLeftLeg().rotation.x = 0;
+            robot.getRightLeg().rotation.x = 0;
+            return;
+        }
+
         let delta = this.#clock.getDelta();
         delta *= (Math.PI / 2);
-        delta = Math.min(delta, robot.getLeftLeg().rotation.x);
+
         robot.getLeftLeg().rotateX(-delta);
         robot.getRightLeg().rotateX(-delta);
     }
@@ -363,9 +387,15 @@ class legsUpState {
     }
 
     move(robot) {
+        if ((Math.PI / 2) - robot.getLeftFoot().rotation.x < Math.PI / 60) {
+            robot.getLeftLeg().rotation.x = Math.PI / 2;
+            robot.getRightLeg().rotation.x = Math.PI / 2;
+            return;
+        }
+
         let delta = this.#clock.getDelta();
         delta *= (Math.PI / 2);
-        delta = Math.min(delta, (Math.PI / 2) - robot.getLeftLeg().rotation.x);
+
         robot.getLeftLeg().rotateX(delta);
         robot.getRightLeg().rotateX(delta);
     }
@@ -381,9 +411,15 @@ class feetUpState {
     }
 
     move(robot) {
+        if ((Math.PI / 2) - robot.getLeftFoot().rotation.x < Math.PI / 60) {
+            robot.getLeftFoot().rotation.x = Math.PI / 2;
+            robot.getRightFoot().rotation.x = Math.PI / 2;
+            return;
+        }
+
         let delta = this.#clock.getDelta();
         delta *= (Math.PI / 2);
-        delta = Math.min(delta, (Math.PI / 2) - robot.getLeftFoot().rotation.x);
+
         robot.getLeftFoot().rotateX(delta);
         robot.getRightFoot().rotateX(delta);
     }
@@ -399,9 +435,15 @@ class feetDownState {
     }
 
     move(robot) {
+        if (robot.getLeftFoot().rotation.x < Math.PI / 60) {
+            robot.getLeftFoot().rotation.x = 0;
+            robot.getRightFoot().rotation.x = 0;
+            return;
+        }
+
         let delta = this.#clock.getDelta();
         delta *= (Math.PI / 2);
-        delta = Math.min(delta, robot.getLeftFoot().rotation.x);
+
         robot.getLeftFoot().rotateX(-delta);
         robot.getRightFoot().rotateX(-delta);
     }
@@ -419,9 +461,14 @@ class headUpState {
     }
 
     move(robot) {
+        if (- robot.getHead().rotation.x < Math.PI / 60) {
+            robot.getHead().rotation.x = 0;
+            return;
+        }
+
         let delta = this.#clock.getDelta();
         delta *= (Math.PI / 2);
-        delta = Math.min(delta, - robot.getHead().rotation.x);
+
         robot.getHead().rotateX(delta);
     }
 }
@@ -436,9 +483,14 @@ class headDownState {
     }
 
     move(robot) {
+        if ((Math.PI / 2) + robot.getHead().rotation.x < Math.PI / 60) {
+            robot.getHead().rotation.x = - Math.PI / 2;
+            return;
+        }
+
         let delta = this.#clock.getDelta();
         delta *= (Math.PI / 2);
-        delta = Math.min(delta, (Math.PI / 2) + robot.getHead().rotation.x);
+
         robot.getHead().rotateX(-delta);
     }
 }
