@@ -61,8 +61,8 @@ function update() {
 }
 
 //TODO: change this coordinates once the robot is added
-front.position.set(1000, 240, 110);
-lateral.position.set(95, 240, 1000);
+lateral.position.set(1000, 240, 110);
+front.position.set(95, 240, 1000);
 top.position.set(95, 1000, 110);
 isoOrthographic.position.set(600, 600, 600);
 isoPerspective.position.set(600, 600, 600);

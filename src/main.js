@@ -16,18 +16,12 @@ function main() {
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(renderer.domElement);
     scene.background = new THREE.Color(0xdddddd);
-    scene.add(new THREE.AxesHelper(600));
 
     cameraControl.setTarget(new THREE.Vector3(95, 240, 110));
     camera = cameraControl.camera5;
 
     beepboop = new robot.Robot();
     trailer = new tow.Tow();
-
-    // TODO: maybe this could refactored into the trailer itself, like the robot
-    trailer.position.set(110, 135, -280);
-    trailer.hitbox.setFromObject(trailer);
-    //
 
     scene.add(beepboop, beepboop.hitboxHelper, trailer, trailer.hitboxHelper);
 
@@ -37,22 +31,27 @@ function main() {
 function animate() {
     // tldr, everytime the program has time to render a frame, it'll call this
     // function
-    requestAnimationFrame(animate);
-    renderer.render(scene, camera);
     beepboop.move();
     trailer.move();
     checkCollisions();
+
+    renderer.render(scene, camera);
+    requestAnimationFrame(animate);
 }
 
 function checkCollisions() {
-    console.log(beepboop.hitbox.intersectsBox(trailer.hitbox),
-        beepboop.isTruck(), !trailer.isTowed());
     if (beepboop.hitbox.intersectsBox(trailer.hitbox) &&
         beepboop.isTruck() && !trailer.isTowed()) {
         trailer.plugInto(new THREE.Vector3()
             .add(beepboop.towPoint.position)
             .add(beepboop.position)
         );
+    }
+
+    if (trailer.isTowing()) {
+        window.removeEventListener("keydown", keydownHandler);
+    } else {
+        window.addEventListener("keydown", keydownHandler);
     }
 }
 
@@ -63,7 +62,7 @@ window.addEventListener("resize", () => {
 
 let keysPressed = {};
 
-window.addEventListener("keydown", (e) => {
+function keydownHandler(e) {
     keysPressed[e.key] = true;
 
     switch (e.key) {
@@ -93,70 +92,87 @@ window.addEventListener("keydown", (e) => {
             break;
 
         case 'q':
+            console.log("[INFO]: stretching feet");
             beepboop.moveFeetUp();
             break;
 
         case 'a':
+            console.log("[INFO]: folding feet");
             beepboop.moveFeetDown();
             break;
 
         case 'w':
+            console.log("[INFO]: stretching legs");
             beepboop.moveLegsUp();
             break;
 
         case 's':
+            console.log("[INFO]: folding legs");
             beepboop.moveLegsDown();
             break;
 
         case 'e':
+            console.log("[INFO]: hiding arms");
             beepboop.moveArmsInwards();
             break;
 
         case 'd':
+            console.log("[INFO]: showing arms");
             beepboop.moveArmsOutwards();
             break;
 
         case 'r':
+            console.log("[INFO]: hiding head");
             beepboop.moveHeadDown();
             break;
 
         case 'f':
+            console.log("[INFO]: showing head");
             beepboop.moveHeadUp();
             break;
 
         case 'ArrowLeft':
+            console.log("[INFO]: moving trailer to the left");
             trailer.moveLeft();
             break;
 
         case 'ArrowDown':
+            console.log("[INFO]: moving trailer closer");
             trailer.moveDown();
             break;
 
         case 'ArrowUp':
+            console.log("[INFO]: moving trailer away");
             trailer.moveUp();
             break;
 
         case 'ArrowRight':
+            console.log("[INFO]: moving trailer to the right");
             trailer.moveRight();
             break;
 
         case 'j':
+            console.log("[INFO]: moving trailer to the left");
             trailer.moveLeft();
             break;
 
         case 'k':
+            console.log("[INFO]: moving trailer closer");
             trailer.moveDown();
             break;
 
         case 'l':
+            console.log("[INFO]: moving trailer away");
             trailer.moveUp();
             break;
 
         case 'ç':
+            console.log("[INFO]: moving trailer to the right");
             trailer.moveRight();
             break;
-        // for debugging purposes
+
         default:
+            console.log("[INFO]: unknown key");
             break;
     }
 
@@ -164,7 +180,7 @@ window.addEventListener("keydown", (e) => {
         console.log("[INFO]: toggling wireframe");
         beepboop.toggleWireframe();
     }
-});
+}
 
 window.addEventListener("keyup", (e) => {
     switch (e.key) {

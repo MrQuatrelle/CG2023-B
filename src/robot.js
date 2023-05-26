@@ -20,7 +20,7 @@ class Robot extends THREE.Object3D {
     #rightArm;
 
     #headState;
-    #legState;
+    #legsState;
     #feetState;
     #armsState;
     #moving;
@@ -56,7 +56,7 @@ class Robot extends THREE.Object3D {
         this.#leftArm.position.set(95, -25, -35);
 
         this.#headState = new stillState();
-        this.#legState = new stillState();
+        this.#legsState = new stillState();
         this.#feetState = new stillState();
         this.#armsState = new stillState();
         this.#moving = 0;
@@ -72,14 +72,13 @@ class Robot extends THREE.Object3D {
             this.towPoint);
 
         this.hitbox = new THREE.Box3();
-        // TODO: Remove this in the end!
-        this.hitboxHelper = new THREE.Box3Helper(this.hitbox, { color: 0xff0000 });
-        this.reset();
+
+        this.set();
     }
 
     move() {
         this.#feetState.move(this);
-        this.#legState.move(this);
+        this.#legsState.move(this);
         this.#headState.move(this);
         this.#armsState.move(this);
 
@@ -111,24 +110,24 @@ class Robot extends THREE.Object3D {
     }
 
     moveLegsDown() {
-        if (!this.#legState.isMoving) {
+        if (!this.#legsState.isMoving) {
             console.log("[INFO]: moving legs down");
-            this.#legState = new legsDownState();
+            this.#legsState = new legsDownState();
             this.#moving++;
         }
     }
 
     moveLegsUp() {
-        if (!this.#legState.isMoving) {
+        if (!this.#legsState.isMoving) {
             console.log("[INFO]: moving legs up");
-            this.#legState = new legsUpState();
+            this.#legsState = new legsUpState();
             this.#moving++;
         }
     }
 
     stopLegs() {
-        if (this.#legState.isMoving) {
-            this.#legState = new stillState();
+        if (this.#legsState.isMoving) {
+            this.#legsState = new stillState();
             this.#moving--;
         }
     }
@@ -219,7 +218,6 @@ class Robot extends THREE.Object3D {
         return this.#head;
     }
 
-    // BUG: are this methods even worth it?
     getLeftArmPositionZ() {
         return this.#leftArm.position.z;
     }
@@ -235,9 +233,8 @@ class Robot extends THREE.Object3D {
     getRightArmPositionX() {
         return this.#rightArm.position.z;
     }
-    // !comment
 
-    reset() {
+    set() {
         this.position.set(110, 370, 280);
         this.#updateHeight();
     }
@@ -262,7 +259,7 @@ class Robot extends THREE.Object3D {
             this.#leftLeg.rotation.x === Math.PI / 2) {
             this.#truck = true;
             console.log("[INFO]: robot form: truck");
-        }
+        } 
         else {
             this.#truck = false;
         }

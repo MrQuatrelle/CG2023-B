@@ -12,7 +12,6 @@ class Tow extends THREE.Object3D {
     #rightState;
     #upState;
     #towingState;
-    #moving;
 
     #plugged;
 
@@ -44,8 +43,7 @@ class Tow extends THREE.Object3D {
         this.add(box, support, this.towPoint);
 
         this.hitbox = new THREE.Box3();
-        // TODO: Remove this in the end
-        this.hitboxHelper = new THREE.Box3Helper(this.hitbox, { color: 0xff0000 });
+        this.hitbox.setFromObject(this);
 
         this.#leftState = new stillState();
         this.#downState = new stillState();
@@ -53,7 +51,8 @@ class Tow extends THREE.Object3D {
         this.#rightState = new stillState();
         this.#towingState = new stillState();
         this.#plugged = false;
-        this.#moving = 0;
+
+        this.position.set(110, 135, -300);
     }
 
     /**
@@ -61,20 +60,19 @@ class Tow extends THREE.Object3D {
     *        move to
     */
     plugInto(connection) {
-        // TODO: add annimations here. connection is a THREE.Vector3 with the
-        // coordinates where the trailer's towPoint has to go to.
-
-        console.log("HERE");
         if (connection.isVector3) {
             this.#towingState = new moveToTruckState(connection);
 
             this.#plugged = true;
-            this.#moving++;
         }
     }
 
     isTowed() {
         return this.#plugged;
+    }
+
+    isTowing() {
+        return this.#towingState instanceof moveToTruckState;
     }
 
     #generateBox() {
@@ -139,56 +137,48 @@ class Tow extends THREE.Object3D {
     moveLeft() {
         if (!this.#leftState.isMoving) {
             this.#leftState = new moveLeftState();
-            this.#moving++;
         }
     }
 
     stopLeft() {
         if (this.#leftState.isMoving) {
             this.#leftState = new stillState();
-            this.#moving--;
         }
     }
 
     moveDown() {
         if (!this.#downState.isMoving) {
             this.#downState = new moveDownState();
-            this.#moving++;
         }
     }
 
     stopDown() {
         if (this.#downState.isMoving) {
             this.#downState = new stillState();
-            this.#moving--;
         }
     }
 
     moveUp() {
         if (!this.#upState.isMoving) {
             this.#upState = new moveUpState();
-            this.#moving++;
         }
     }
 
     stopUp() {
         if (this.#upState.isMoving) {
             this.#upState = new stillState();
-            this.#moving--;
         }
     }
 
     moveRight() {
         if (!this.#rightState.isMoving) {
             this.#rightState = new moveRightState();
-            this.#moving++;
         }
     }
 
     stopRight() {
         if (this.#rightState.isMoving) {
             this.#rightState = new stillState();
-            this.#moving--;
         }
     }
 }
