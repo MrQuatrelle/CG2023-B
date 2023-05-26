@@ -79,9 +79,44 @@ window.addEventListener("keydown", (e) => {
             camera = cameraControl.camera5;
             break;
 
+        case 'q':
+            console.log("[INFO]: moving feet down");
+            beepboop.moveFeetUp();
+            break;
+
         case 'a':
             console.log("[INFO]: moving feet down");
             beepboop.moveFeetDown();
+            break;
+
+        case 'w':
+            console.log("[INFO]: moving feet down");
+            beepboop.moveLegsUp();
+            break;
+
+        case 's':
+            console.log("[INFO]: moving feet down");
+            beepboop.moveLegsDown();
+            break;
+
+        case 'e':
+            console.log("[INFO]: moving feet down");
+            beepboop.moveArmsInwards();
+            break;
+
+        case 'd':
+            console.log("[INFO]: moving feet down");
+            beepboop.moveArmsOutwards();
+            break;
+
+        case 'r':
+            console.log("[INFO]: moving feet down");
+            beepboop.moveHeadDown();
+            break;
+
+        case 'f':
+            console.log("[INFO]: moving feet down");
+            beepboop.moveHeadUp();
             break;
 
         // for debugging purposes
@@ -92,41 +127,6 @@ window.addEventListener("keydown", (e) => {
     if (keysPressed['6']) {
         console.log("[INFO]: toggling wireframe");
         beepboop.toggleWireframe();
-    }
-
-    if (keysPressed['w']) {
-        console.log("[INFO]: moving tow -z");
-        beepboop.rotateLegsUp();
-    }
-
-    if (keysPressed['s']) {
-        console.log("[INFO]: moving tow -z");
-        beepboop.rotateLegsDown();
-    }
-
-    if (keysPressed['e']) {
-        console.log("[INFO]: moving arms inwards");
-        beepboop.moveArmsInwards();
-    }
-
-    if (keysPressed['d']) {
-        console.log("[INFO]: moving arms inwards");
-        beepboop.moveArmsOutwards();
-    }
-
-    if (keysPressed['q']) {
-        console.log("[INFO]: moving feet up");
-        beepboop.moveFeetUp();
-    }
-
-    if (keysPressed['f']) {
-        console.log("[INFO]: Showing head");
-        beepboop.rotateHeadUp();
-    }
-
-    if (keysPressed['r']) {
-        console.log("[INFO]: Hidding head");
-        beepboop.rotateHeadDown();
     }
 
     if (keysPressed['ArrowDown']) {
@@ -174,6 +174,14 @@ window.addEventListener("keyup", (e) => {
 
         case 's':
             beepboop.stopLegs();
+            break;
+
+        case 'e':
+            beepboop.stopArms();
+            break;
+
+        case 'd':
+            beepboop.stopArms();
             break;
     }
     delete keysPressed[e.key];

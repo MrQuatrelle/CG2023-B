@@ -21,6 +21,7 @@ class Robot extends THREE.Object3D {
 
     #leftArm;
     #rightArm;
+    #armsState;
 
     #truck;
 
@@ -52,9 +53,9 @@ class Robot extends THREE.Object3D {
 
         this.#rightArm = new arm.Arm();
         this.#rightArm.position.set(-95, -25, -35);
-
         this.#leftArm = new arm.Arm();
         this.#leftArm.position.set(95, -25, -35);
+        this.#armsState = new armsStillState();
 
         this.#truck = false;
 
@@ -69,7 +70,6 @@ class Robot extends THREE.Object3D {
         this.hitbox = new THREE.Box3();
         // TODO: Remove this in the end!
         this.hitboxHelper = new THREE.Box3Helper(this.hitbox, { color: 0xff0000 });
-        console.log(this.hitbox);
         this.reset();
     }
 
@@ -77,6 +77,7 @@ class Robot extends THREE.Object3D {
         this.#moveFeet();
         this.#moveLegs();
         this.#moveHead();
+        this.#moveArms();
 
         this.#updateHeight();
     }
@@ -101,16 +102,14 @@ class Robot extends THREE.Object3D {
         this.#feetState.move(this);
     }
 
-    rotateLegsDown() {
+    moveLegsDown() {
         if (this.#legState.isMoving == false) {
-            console.log("here");
             this.#legState = new legsDownState();
         }
     }
 
-    rotateLegsUp() {
+    moveLegsUp() {
         if (this.#legState.isMoving == false) {
-            console.log("here");
             this.#legState = new legsUpState();
         }
     }
@@ -123,13 +122,13 @@ class Robot extends THREE.Object3D {
         this.#legState.move(this);
     }
 
-    rotateHeadDown() {
+    moveHeadDown() {
         if (this.#headState.isMoving == false) {
             this.#headState = new headDownState();
         }
     }
 
-    rotateHeadUp() {
+    moveHeadUp() {
         if (this.#headState.isMoving == false) {
             this.#headState = new headUpState();
         }
@@ -141,6 +140,26 @@ class Robot extends THREE.Object3D {
 
     #moveHead() {
         this.#headState.move(this);
+    }
+
+    moveArmsInwards() {
+        if (this.#armsState.isMoving == false) {
+            this.#armsState = new armsInwardsState();
+        }
+    }
+
+    moveArmsOutwards() {
+        if (this.#armsState.isMoving == false) {
+            this.#armsState = new armsOutwardsState();
+        }
+    }
+
+    stopArms() {
+        this.#armsState = new armsStillState();
+    }
+
+    #moveArms() {
+        this.#armsState.move(this);
     }
 
     /**
@@ -206,34 +225,6 @@ class Robot extends THREE.Object3D {
         this.#updateHeight();
     }
 
-    moveArmsInwards() {
-        if (this.getLeftArmPositionZ() > -65) {
-            this.#leftArm.translateZ(-2);
-            this.#rightArm.translateZ(-2);
-        }
-        else {
-            if (this.getLeftArmPositionX() > 65) {
-                this.#leftArm.translateX(-2);
-                this.#rightArm.translateX(2);
-            }
-        }
-        this.#updateHeight();
-    }
-
-    moveArmsOutwards() {
-        if (this.getLeftArmPositionX() < 95) {
-            this.#leftArm.translateX(2);
-            this.#rightArm.translateX(-2);
-        }
-        else {
-            if (this.getLeftArmPositionZ() < -35) {
-                this.#leftArm.translateZ(2);
-                this.#rightArm.translateZ(2);
-            }
-        }
-        this.#updateHeight();
-    }
-
     #updateHeight() {
         var footOffset = Math.sin(this.#leftFoot.rotation.x +
             this.#leftLeg.rotation.x) * 80; // 80 = foot length
@@ -269,11 +260,12 @@ class Robot extends THREE.Object3D {
     }
 }
 
+// Arms classes for State Design Pattern
 
 class armsStillState {
     isMoving = false;
 
-    constructor() {}
+    constructor() { }
 
     move(robot) {
         // do nothing
@@ -282,40 +274,62 @@ class armsStillState {
 
 class armsOutwardsState extends armsStillState {
     isMoving = true;
+    #clock;
 
-    moveArmsOutwards(robot) {
+    constructor() {
+        super();
+        this.#clock = new THREE.Clock();
+        this.#clock.start();
+    }
+
+    move(robot) {
+        let delta = this.#clock.getDelta();
+        delta *= 30 * 2;
         if (robot.getLeftArmPositionX() < 95) {
-            robot.getLeftArm().translateX(2);
-            robot.getRightArm().translateX(-2);
+            delta = Math.min(delta, 95 - robot.getLeftArmPositionX());
+            robot.getLeftArm().translateX(delta);
+            robot.getRightArm().translateX(-delta);
         }
-        else {
-            if (robot.getLeftArmPositionZ() < -35) {
-                robot.getLeftArm().translateZ(2);
-                robot.getRightArm().translateZ(2);
-            }
+        else if (robot.getLeftArmPositionZ() < -35) {
+            delta = Math.min(delta, -(robot.getLeftArmPositionZ() + 35));
+            robot.getLeftArm().translateZ(delta);
+            robot.getRightArm().translateZ(delta);
         }
     }
 }
 
 class armsInwardsState extends armsStillState {
     isMoving = true;
+    #clock;
 
-    moveArmsInwards(robot) {
+    constructor() {
+        super();
+        this.#clock = new THREE.Clock();
+        this.#clock.start();
+    }
+
+    move(robot) {
+        let delta = this.#clock.getDelta();
+        delta *= 30 * 2;
         if (robot.getLeftArmPositionZ() > -65) {
-            robot.getLeftArm().translateZ(-2);
-            robot.getRightArm().translateZ(-2);
+            delta = Math.min(delta, robot.getLeftArmPositionZ() + 65);
+            robot.getLeftArm().translateZ(-delta);
+            robot.getRightArm().translateZ(-delta);
         }
         else if (robot.getLeftArmPositionX() > 65) {
-            robot.getLeftArm().translateX(-2);
-            robot.getRightArm().translateX(2);
+            delta = Math.min(delta, robot.getLeftArmPositionX() - 65);
+            robot.getLeftArm().translateX(-delta);
+            robot.getRightArm().translateX(delta);
         }
     }
 }
 
+// Legs classes for State Design Pattern
+
 class legsStillState {
     isMoving = false;
 
-    constructor() {}
+    constructor() { }
 
     move(robot) {
         // do nothing
@@ -359,6 +373,7 @@ class legsUpState extends legsStillState {
         robot.getRightLeg().rotateX(delta);
     }
 }
+// Feet classes for State Design Pattern
 
 class feetStillState {
     isMoving = false;
@@ -407,6 +422,8 @@ class feetDownState extends feetStillState {
         robot.getRightFoot().rotateX(-delta);
     }
 }
+
+// Head classes for State Design Pattern
 
 class headStillState {
     isMoving = false;
