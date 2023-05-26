@@ -24,13 +24,13 @@ class Body extends THREE.Object3D {
 
     #generateChest() {
         //Front part of chest
-        const chestMeshGeo1 = new THREE.BoxGeometry(160, 80, 130);
+        const chestMeshGeo1 = new THREE.BoxGeometry(160, 81, 130);
         const chestMesh1 = new THREE.Mesh(chestMeshGeo1,
             new THREE.MeshBasicMaterial({ color: 0x920000 }));
         chestMesh1.position.set(0, 0, 15)
 
         //Back part of chest
-        const chestMeshGeo2 = new THREE.BoxGeometry(100, 80, 30);
+        const chestMeshGeo2 = new THREE.BoxGeometry(100, 81, 30);
         const chestMesh2 = new THREE.Mesh(chestMeshGeo2,
             new THREE.MeshBasicMaterial({ color: 0x920000 }));
         chestMesh2.position.set(0, 0, -65)
