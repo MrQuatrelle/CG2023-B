@@ -1,8 +1,5 @@
 import * as THREE from "three";
 import wheel from "./wheels.js";
-import head from "./head.js";
-import legs from "./legs.js";
-import arm from "./braco.js";
 
 
 class Body extends THREE.Object3D {
@@ -36,8 +33,8 @@ class Body extends THREE.Object3D {
         chestMesh2.position.set(0, 0, -65)
 
         //Windows
-        const windowMeshGeo = new THREE.PlaneGeometry( 60, 60);
-        const windowMat = new THREE.MeshBasicMaterial({ color: 0x3A6EA5, side: THREE.DoubleSide, wireframe:false} );
+        const windowMeshGeo = new THREE.PlaneGeometry(60, 60);
+        const windowMat = new THREE.MeshBasicMaterial({ color: 0x3A6EA5, side: THREE.DoubleSide, wireframe: false });
         const windowMesh1 = new THREE.Mesh(windowMeshGeo, windowMat);
         const windowMesh2 = new THREE.Mesh(windowMeshGeo, windowMat);
         windowMesh1.position.set(40, 0, 80.1);

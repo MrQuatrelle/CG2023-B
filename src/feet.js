@@ -12,16 +12,8 @@ class Foot extends THREE.Object3D {
                 color: 0x000769
             })
         );
-        // const footEdges = new THREE.LineSegments(
-        //     new THREE.EdgesGeometry(footGeom),
-        //     new THREE.LineBasicMaterial({
-        //         color: 0x000000,
-        //         linewidth: 1.5,
-        //     })
-        // );
 
         buffer.add(footMesh);
-        // buffer.add(footEdges);
         buffer.position.set(0, -10, 40);
 
         this.add(buffer);

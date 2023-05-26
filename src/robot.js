@@ -259,7 +259,7 @@ class Robot extends THREE.Object3D {
             this.#leftLeg.rotation.x === Math.PI / 2) {
             this.#truck = true;
             console.log("[INFO]: robot form: truck");
-        } 
+        }
         else {
             this.#truck = false;
         }

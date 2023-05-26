@@ -40,7 +40,7 @@ const cameras = [front, lateral, top, isoOrthographic, isoPerspective]
 
 function setTarget(t) {
     target = t;
-    cameras.forEach((c) => {c.lookAt(t)});
+    cameras.forEach((c) => { c.lookAt(t) });
 }
 
 function update() {
@@ -51,13 +51,13 @@ function update() {
             c.top = window.innerHeight / 2;
             c.bottom = -window.innerHeight / 2;
         }
-        else if(c.isPerspectiveCamera) {
+        else if (c.isPerspectiveCamera) {
             c.aspect = window.innerWidth / window.innerHeight;
         }
 
         c.updateProjectionMatrix();
     });
-    
+
 }
 
 //TODO: change this coordinates once the robot is added
