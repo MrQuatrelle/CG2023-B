@@ -23,7 +23,7 @@ function main() {
     beepboop = new robot.Robot();
     trailer = new tow.Tow();
 
-    scene.add(beepboop, beepboop.hitboxHelper, trailer, trailer.hitboxHelper);
+    scene.add(beepboop, trailer);
 
     animate();
 }
